@@ -10,7 +10,7 @@
  `aopw_bloom_response_generator.ipynb`, `experiment1_bloom_response_generator.ipynb`,
  `experiment2_bloom_response_generator.ipynb`, `experiment3_bloom_response_generator.ipynb` 
 
-## Scripts for singel-word answer retrival task
+## Scripts for single-word answer retrival task
 >**_NOTE:_** The two files in this section were <i>ONLY</i> used for processing the data in `analysis_of_prior_work`. 
 
 ### GPT-3 
