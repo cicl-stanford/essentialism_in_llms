@@ -36,7 +36,7 @@ How do essentialist beliefs about categories arise? We hypothesize that such bel
 └── writeup
 ```
 
-- `analysis/` contains all the code for analyzing data and generating figures, written in R
+- `analysis/` contains all the code for analyzing data and generating figures, written in R.
   <!-- (view a rendered file [here](https://cicl-stanford.github.io/essentialism_in_llms/)). -->
 - `code/` contains all the materials and code for the experiments.
   - `experiments` contains materials for each experiment that was run. 
