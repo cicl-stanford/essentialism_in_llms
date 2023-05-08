@@ -1,0 +1,1192 @@
+Sentence: The thing after the special operation is a bee. 
+Answer: bee 
+ 
+Sentence: It is a bee. 
+Answer: bee 
+ 
+Sentence: The thing after the special operation is neither a bee nor a spider. It is a hybrid creature that has been altered by Suzy and Andy. 
+Answer: hybrid 
+
+Sentence: The thing after the special operation is a spider. 
+Answer: spider 
+ 
+Sentence: spider 
+Answer: spider 
+ 
+Sentence: The thing after the special operation would most likely be classified as a spider, since it no longer exhibits many of the traits of a bee. 
+Answer: spider 
+
+---------------------------------------------
+
+Sentence: The thing after the special operation is a bee. 
+Answer: bee 
+ 
+Sentence: Bee 
+Answer: bee 
+ 
+Sentence: The thing after the special operation is neither a bee nor a spider. It is a hybrid creature that has the characteristics of both insects. 
+Answer: hybrid 
+
+Sentence: The thing after the special operation is more like a spider than a bee. 
+Answer: spider 
+ 
+Sentence: Spider 
+Answer: spider 
+ 
+Sentence: Many people would say that the thing after the special operation is a spider, because it has the insides of a spider. However, some people might say that it is a bee because it still looks like a bee on the outside. 
+Answer: spider 
+
+--------------------------------------------------
+
+Sentence: The thing placed in the cage full of spiders is a bee. 
+Answer: bee 
+ 
+Sentence: The thing placed in the cage full of spiders would be classified as a bee, since it only pollinates flowers and produces honey. Spiders, on the other hand, build webs to capture insects for food. 
+Answer: bee 
+ 
+Sentence: It is a bee. 
+Answer: bee 
+
+Sentence: A spider. 
+Answer: spider 
+ 
+Sentence: The thing that Suzy and Andy placed in the cage full of spiders is a spider. 
+Answer: spider 
+ 
+Sentence: It depends on how you define "bee." If you consider a bee to be an insect that pollinates flowers and produces honey, then the thing in the cage is not a bee. However, if you simply consider a bee to be any type of flying insect, then the thing in the cage could be considered a bee, since it is an insect that does fly. 
+Answer: hybrid 
+
+----------------------------------------------------
+
+Sentence: The thing after the special operation is a bee-spider hybrid. 
+Answer: hybrid 
+ 
+Sentence: It is a bee, even though it has been modified to look like a spider. 
+Answer: bee 
+ 
+Sentence: The thing after the special operation would be classified as a bee, since it retains most of its bee characteristics. However, it is worth noting that this bee would be significantly different from a typical bee, due to the fact that it has been modified to spin webs and eat insects. 
+Answer: bee 
+
+Sentence: The thing after the special operation is a spider. 
+Answer: spider 
+ 
+Sentence: Spider 
+Answer: spider 
+ 
+Sentence: The thing after the special operation is neither a bee nor a spider. It is an artificial hybrid creature that has been created by Suzy and Andy through genetic engineering. 
+Answer: hybrid 
+
+-------------------------------------------------------
+
+Sentence: It is a hotplate. 
+Answer: hotplate 
+ 
+Sentence: The thing after the special operation is a hotplate. 
+Answer: hotplate 
+ 
+Sentence: The thing after the special procedure is a hotpplate. 
+Answer: hotplate 
+
+Sentence: Clock 
+Answer: clock 
+ 
+Sentence: It is a clock 
+Answer: clock 
+ 
+Sentence: The thing after the special operation is a clock. 
+Answer: clock 
+
+Sentence: It is not clear what the thing is after the special operation. 
+Answer: hybrid 
+ 
+Sentence: Vulture 
+Answer: vulture 
+ 
+Sentence: It is impossible to say for certain without further information. If the scientists simply changed the appearance of the hummingbird without changing its internal anatomy, then it would still be a hummingbird. However, if they modified the internal anatomy as well, then it might be classified as a vulture. 
+Answer: hybrid 
+
+Sentence: The thing after the special operation is a hummingbird. 
+Answer: hummingbird 
+ 
+Sentence: It is a hummingbird 
+Answer: hummingbird 
+ 
+Sentence: It is not possible to say for certain whether the thing after the special operation is a vulture or a hummingbird. It depends on how the scientists define a hummingbird. If they consider a hummingbird to be any creature with a beak, wings, legs and body that is painted with bright colors, then the thing after the operation would technically be a hummingbird. However, if they also require that hummingbirds eat dead animals, then the thing after the operation would not be a 
+Answer: hybrid 
+
+Sentence: The thing after the special operation is most likely coal. 
+Answer: coal 
+ 
+Sentence: Magnetite. 
+Answer: magnetite 
+ 
+Sentence: According to the information given, the thing after the special operation is coal. 
+Answer: coal 
+
+Sentence: It is not clear what the special operation is, so it is not possible to determine if the thing is magnetite or coal. 
+Answer: hybrid 
+ 
+Sentence: The thing seems to be coal, since it does not attract objects. 
+Answer: coal 
+ 
+Sentence: Magnetite is a type of iron ore that is naturally magnetic, meaning it can be attracted to a magnet. Coal, on the other hand, is a combustible black or brownish-black sedimentary rock that is mostly made up of carbon. Based on the information provided, it seems that the thing after the special procedure is more likely to be coal. 
+Answer: coal 
+
+------------------------------------------------------------
+
+Sentence: The thing after the special operation is a clock. 
+Answer: clock 
+ 
+Sentence: It is a clock. 
+Answer: clock 
+ 
+Sentence: Most likely, the thing after the special operation is a clock. The scientists probably didn't do a very good job of changing the insides of the clock, so it still just tells time instead of heating up. 
+Answer: clock 
+
+Sentence: Since the thing no longer tells time after the special operation, it is no longer a clock. It is now a hotplate. 
+Answer: hotplate 
+ 
+Sentence: A hotplate. 
+Answer: hotplate 
+ 
+Sentence: The thing after the special operation is technically a hotplate, as that is what its function has become. However, it still resembles a clock, so some people may still refer to it as such. 
+Answer: hotplate 
+
+Sentence: The thing after the special operation is a hummingbird. 
+Answer: hummingbird 
+ 
+Sentence: It is a hummingbird. 
+Answer: hummingbird 
+ 
+Sentence: It is hard to say for sure. The thing after the operation still looks like a hummingbird, but it now has the insides of a vulture. It no longer eats dead animals, but instead pollinates flowers. Based on these changes, it is possible that the thing is now more like a vulture than a hummingbird. 
+Answer: hybrid 
+
+Sentence: The thing is a vulture after the special operation. 
+Answer: vulture 
+ 
+Sentence: It is a vulture. 
+Answer: vulture 
+ 
+Sentence: The thing after the special operation would be considered a vulture, since it no longer displays the hummingbird behavior of pollinating flowers. 
+Answer: vulture 
+
+Sentence: The thing after the special operation is magnetite. 
+Answer: magnetite 
+ 
+Sentence: Magnesium 
+Answer: magnetite 
+ 
+Sentence: The thing after the special operation is still technically coal, even though the insides have been replaced with those of magnetite. This is because the physical properties of the coal have not been changed, only the internal composition. 
+Answer: coal 
+
+Sentence: The thing after the special operation is magnetite. 
+Answer: magnetite 
+ 
+Sentence: The answer is Magnetite. 
+Answer: magnetite 
+ 
+Sentence: It is unclear from the scenario whether the object is coal or magnetite. It depends on what the scientists used to replace the hummingbird's insides. If they used actual magnetite, then the object would be magnetite. If they used something that looked like magnetite but wasn't actually magnetite, then the object would be coal. 
+Answer: hybrid 
+
+------------------------------------------------------------
+
+Sentence: The object after the special operation is a hotplate. 
+Answer: hotplate 
+ 
+Sentence: HotPlate 
+Answer: hotplate 
+ 
+Sentence: Although the thing after the special operation may resemble a clock, it is actually a hotplate. This is because the object was not able to tell time after the special operation was performed, which is the key function of a clock. Therefore, the object is classified as a hotplate. 
+Answer: hotplate 
+
+Sentence: The thing after the special operation is a hotplate and not a clock. 
+Answer: hotplate 
+ 
+Sentence: The thing is a hotplate. 
+Answer: hotplate 
+ 
+Sentence: The thing after the special operation is most likely a hotplate, since it did not tell time as expected. 
+Answer: hotplate 
+
+Sentence: Based on the information given, it seems that the thing after the special operation is a clock. 
+Answer: clock 
+ 
+Sentence: A clock 
+Answer: clock 
+ 
+Sentence: The answer is unclear. Based on the information given, it is difficult to determine if the object is a hotplate or a clock. More information would be needed to make a determination. 
+Answer: hybrid 
+
+Sentence: The thing after the special operation is a clock. 
+Answer: clock  
+ 
+Sentence: Clock 
+Answer: clock 
+ 
+Sentence: Based on the information given, it seems that the thing after the special operation is a clock. 
+Answer: clock 
+
+Sentence: The thing after the special operation is neither a vulture nor a hummingbird. 
+Answer: hybrid 
+ 
+Sentence: It is a vulture. 
+Answer: vulture 
+ 
+Sentence: It is not a hummingbird because it does not pollinate flowers. It is not a vulture because it has a shortened body and wing span. 
+Answer: hybrid 
+
+Sentence: The thing after the special operation is not a hummingbird. It is a vulture that has been modified to look like a hummingbird. 
+Answer: vulture 
+ 
+Sentence: Vulture 
+Answer: vulture 
+ 
+Sentence: It is difficult to say for certain without further information, but it seems likely that the thing after the special operation is a vulture. If the scientists shortened the vulture's wings, legs, and body, and painted it with bright colors, it would likely resemble a hummingbird. However, if the thing after the operation only eats dead animals, that is more indicative of a vulture's diet and behavior, and less indicative of a hummingbird's. 
+Answer: vulture 
+
+Sentence: The thing after the special operation is a hummingbird. 
+Answer: hummingbird 
+ 
+Sentence: It is a hummingbird. 
+Answer: hummingbird 
+ 
+Sentence: It is unclear what the thing is after the special operation. It does not appear to be either a vulture or a hummingbird. 
+Answer: hybrid 
+
+Sentence: The thing after the operation is a hummingbird. 
+Answer: hummingbird 
+ 
+Sentence: Hummingbird 
+Answer: hummingbird 
+ 
+Sentence: Many people would say that the thing after the special operation is a hummingbird because it has the characteristic features of one. However, Suzy and Andy know that it is still a vulture because they performed the operation and know what went into it. 
+Answer: vulture 
+
+Sentence: The thing after the special operation is likely coal, since it did not produce energy when tested. 
+Answer: coal 
+ 
+Sentence: Coal 
+Answer: coal 
+ 
+Sentence: I don't know for sure, but my guess would be that the thing after the special operation is coal. 
+Answer: coal 
+
+Sentence: The thing after the special operation is most likely coal, since magnetite is a naturally occurring mineral that is gray or black in color and has a slightly metallic luster. 
+Answer: coal 
+ 
+Sentence: Coal 
+Answer: coal 
+ 
+Sentence: It's impossible to say for sure without further information. If the thing only attracts objects and doesn't produce energy, it's probably coal. However, if the scientists were able to successfully change the magnetite's shape and smooth over its surface, it's possible that it's still magnetite. 
+Answer: hybrid 
+
+Sentence: The thing after the special operation is neither magnetite nor coal. 
+Answer: hybrid 
+ 
+Sentence: Magnetite. 
+Answer: magnetite 
+ 
+Sentence: The thing after the special operation is most likely magnetite, as it has the same properties as magnetite before the operation. However, further testing would be needed to confirm this. 
+Answer: magnetite 
+
+Sentence: Magnetite is a type of mineral that is naturally attracted to objects. After the special operation, the object is no longer magnetite, but coal. 
+Answer: coal 
+ 
+Sentence: It is coal. 
+Answer: coal 
+ 
+Sentence: It is not possible to say for sure without further information about the special procedure that was performed. It is possible that the thing is still magnetite, but it is also possible that it is now coal. 
+Answer: hybrid 
+
+--------------------------------------------------
+
+Sentence: No, it would not be considered a turtle anymore. 
+Answer: no 
+ 
+Sentence: No, it is no longer a turtle. 
+Answer: no 
+ 
+Sentence: If you take out the blood and organs from a turtle, all you would be left with is the shell. The shell is what makes a turtle a turtle, so yes, it would still be considered a turtle. 
+Answer: yes 
+
+Sentence: No, it would not be considered a turtle anymore. 
+Answer: no 
+ 
+Sentence: No 
+Answer: no 
+ 
+Sentence: If you take away the turtle's shell, you are essentially left with the animal's organs and skeleton. While this might not look like a traditional turtle, it would still be classified as a turtle because the essential components are still present. 
+Answer: yes 
+
+Sentence: No, it would not be considered a dog anymore. 
+Answer: no 
+ 
+Sentence: No, it is not a dog. 
+Answer: no 
+ 
+Sentence: It depends on how you define a dog. If you consider a dog to be a living creature, then no, it would not be a dog without its internal organs. However, if you simply consider a dog to be an animal with certain physical characteristics, then yes, it would still be a dog without its internal organs. 
+Answer: maybe 
+
+Sentence: Without the fur, it would no longer be a dog. 
+Answer: no 
+ 
+Sentence: No, it would not be considered a dog anymore. 
+Answer: no 
+ 
+Sentence: It would depend on how much of the dog's fur was removed. If only a small amount was removed, then it would still be considered a dog. However, if most or all of the fur was removed, then it would no longer be considered a dog. 
+Answer: maybe 
+
+Sentence: No, it would no longer be an egg. 
+Answer: no 
+ 
+Sentence: Yes 
+Answer: yes 
+ 
+Sentence: No, it is not an egg. An egg is defined as a ovum, or female reproductive cell, surrounded by one or more layers of albumen, or egg white, and contained within a shell of calcite. Without the albumen and the ovum, you are left with an eggshell, which is not an egg. 
+Answer: no 
+
+Sentence: Yes, it is still an egg without the shell. 
+Answer: yes 
+ 
+Sentence: No, it is not an egg. 
+Answer: no 
+ 
+Sentence: The insides of an egg are called the egg whites and the egg yolk. So, if you took off the eggshell and only had the egg whites and egg yolk, then yes, it would still be an egg. 
+Answer: yes 
+
+Sentence: No, removing the inner flesh of a banana would leave behind just the skin, which would not be considered a banana. 
+Answer: no 
+ 
+Sentence: No, it's not a banana. 
+Answer: no 
+ 
+Sentence: If by "stuff" you mean the banana's pulp and seeds, then no, it would not be a banana. The banana's peel would be left behind, but that alone is not a banana. 
+Answer: no 
+
+Sentence: Yes, it is still considered a banana. 
+Answer: yes 
+ 
+Sentence: Yes 
+Answer: yes 
+ 
+Sentence: The answer to this question is a bit complicated. If you take off the peel and all you have left is the fruit inside, then technically, yes, it is still a banana. However, it would no longer be a whole banana, as the peel is an integral part of the fruit. 
+Answer: maybe 
+
+Sentence: No, it is not a car without a motor. 
+Answer: no 
+ 
+Sentence: No, it's not a car anymore. 
+Answer: no 
+ 
+Sentence: If you take out the motor and all of the other inner workings of a car, you are left with the shell of the car. The shell is basically the frame and exterior of the car. So, in short, yes, the shell of a car is still considered a car. 
+Answer: yes 
+
+Sentence: Without the paint, the car would not be recognizable as a car. The paint is an essential part of the car's design. 
+Answer: no 
+ 
+Sentence: No, it would not be considered a car anymore. 
+Answer: no 
+ 
+Sentence: No, it is not a car. A car is defined as a vehicle with four wheels that is used for transportation. Without the exterior shell, the vehicle would no longer be considered a car. 
+Answer: no 
+
+Sentence: No, it's not a book anymore. It's just a cover. 
+Answer: no 
+ 
+Sentence: No 
+Answer: no 
+ 
+Sentence: This is a difficult question to answer definitively. If all that is left of the book are the covers, then it could be argued that it is no longer a book. However, if the covers are still intact and in good condition, one could argue that it is still technically a book. Ultimately, it would depend on the interpretation of the person viewing it. 
+Answer: maybe 
+
+Sentence: Yes, a book is still a book without its cover. The cover is simply the physical casing that protects the pages of the book. 
+Answer: yes 
+ 
+Sentence: Yes 
+Answer: yes 
+ 
+Sentence: It depends on how you define a book. If you consider a book to be a collection of bound pages with a story or other information inside, then yes, the insides of a book without the cover would still be considered a book. However, if you consider the cover to be an integral part of the book, then no, the insides without the cover would not be considered a book. 
+Answer: maybe 
+
+Sentence: No, it would no longer be considered a pencil. 
+Answer: no 
+ 
+Sentence: Yes 
+Answer: yes 
+ 
+Sentence: If there is no lead inside the pencil, then it is not a functional pencil. It would be considered more of a decoration or a toy at that point. 
+Answer: no 
+
+Sentence: Yes, it would still be considered a pencil. 
+Answer: yes 
+ 
+Sentence: No, it would no longer be a pencil. 
+Answer: no 
+ 
+Sentence: The answer to this question depends on how you define a pencil. If you consider a pencil to be just the wood and lead core, then yes, it would still be a pencil. However, if you consider a pencil to also include the paint and eraser, then no, it would not be a pencil anymore. 
+Answer: maybe 
+
+Sentence: Yes, the jar would still exist without the contents inside. 
+Answer: yes 
+ 
+Sentence: Yes 
+Answer: yes 
+ 
+Sentence: No, it is not a jar. A jar is defined as a container with a wide mouth and a firm cylindrical shape, typically made of glass or ceramic and used for holding food or liquids. Once the food or liquid is removed, it is no longer a jar. 
+Answer: no 
+
+Sentence: Yes, it is still a jar. The label and other external features do not change the fundamental nature of the object. 
+Answer: yes 
+ 
+Sentence: No, it is not a jar. 
+Answer: no 
+ 
+Sentence: No, the jar would no longer be considered a jar once the label and other materials on the outside are removed. 
+Answer: no 
+
+Sentence: Without anything inside of it, it would just be an empty box. It wouldn't really be a toy box anymore. 
+Answer: no 
+ 
+Sentence: No, it would no longer be a toy box. 
+Answer: no 
+ 
+Sentence: It would depend on how you define "toy box." If you consider a toy box to be a type of storage container specifically for toys, then no, it would no longer be a toy box. However, if you more broadly define a toy box as simply a box with a lid, then yes, it would still be a toy box. 
+Answer: maybe 
+
+Sentence: No, without the paint and the exterior, it is just a box. 
+Answer: no 
+ 
+Sentence: Yes, the toy box would still be functional without the paint or other external decoration. 
+Answer: yes 
+ 
+Sentence: Without the paint, the toy box would just be a plain wooden box. It would still serve the same purpose of storing toys, but would be much less visually appealing. 
+Answer: no 
+
+Sentence: Yes, it would still be considered a refrigerator. 
+Answer: yes 
+ 
+Sentence: No, it's not a refrigerator anymore. 
+Answer: no 
+ 
+Sentence: If all you have left are the outsides of a refrigerator, then it is no longer a functional refrigerator. In order to be a functional refrigerator, it must have the necessary components inside, such as the food and shelves. 
+Answer: no 
+
+Sentence: Yes, it would still be considered a refrigerator. 
+Answer: yes 
+ 
+Sentence: No, it is not a refrigerator. 
+Answer: no 
+ 
+Sentence: Without the casing, the refrigerator would no longer be able to function properly. The insulation and external shell are necessary to keep the cold air in and the warm air out. 
+Answer: no 
+
+------------------------------------------------------
+
+Sentence: Edith's tail would have been straight, since she was raised by pigs and would have adopted their physical traits. 
+Answer: straight 
+ 
+Sentence: Edith's tail would have been curly. 
+Answer: curly 
+ 
+Sentence: Many cows have curly tails, but it is also possible for them to have straight tails. Given that Edith grew up on a farm with pigs and never saw another cow, it is likely that her tail would be straight. 
+Answer: straight 
+
+Sentence: Rabbit's ears would have been long, since that is the typical ear size for rabbits. 
+Answer: long 
+ 
+Sentence: Rabbit's ears would likely be shorter than average, since he was raised among monkeys. 
+Answer: short 
+ 
+Sentence: Rabbit's ears would likely be long, as rabbits generally have long ears. However, since Rabbit grew up on a farm with monkeys, it is possible that his ears could be shorter than average, as monkeys generally have shorter ears. 
+Answer: long 
+
+Sentence: The tiger's fur would be striped, as that is the natural coloration for tigers. Even though Tiger grew up on a farm with horses, his stripes would still be visible. 
+Answer: striped 
+ 
+Sentence: The tiger's fur would be striped. 
+Answer: striped 
+ 
+Sentence: There is no correct answer to this question, as it would depend on the specific tiger's genetics. Some tigers have stripes that are more distinct than others, and some have minimal striping or even none at all. So, if the Tiger in this scenario had stripes, they could range from being very noticeable to barely there. 
+Answer: unsure 
+
+Sentence: Minnie's ears would be floppy, since she grew up around dogs and would have been exposed to their floppy ears. 
+Answer: floppy 
+ 
+Sentence: Minnie's ears looked floppy because she grew up around dogs. 
+Answer: floppy 
+ 
+Sentence: Minnie's ears would probably be somewhat floppy, since she grew up around dogs. Dog's ears are typically floppy, so Minnie's ears may have taken on that trait. 
+Answer: floppy 
+
+Sentence: Given that Kanga was raised by goats and never saw another kangaroo, it is likely that she would not have developed a pouch. 
+Answer: no 
+ 
+Sentence: Kanga does not have a pouch. 
+Answer: no 
+ 
+Sentence: Kanga will have a pouch, since all kangaroos have pouches. Even though she was raised by goats and never saw another kangaroo, she will still develop a pouch since it is a characteristic of her species. 
+Answer: yes 
+
+--------------------------------------------------
+
+Sentence: The seed grew into a flower. 
+Answer: flower 
+ 
+Sentence: A flower. 
+Answer: flower 
+ 
+Sentence: There would be a small apple tree that sprouted from the ground. 
+Answer: apple 
+
+Sentence: The seed would grow into a corn plant. 
+Answer: corn 
+ 
+Sentence: Corn. 
+Answer: corn 
+ 
+Sentence: If the seed that Jennifer planted grew into a watermelon, then the watermelon would have popped up out of the ground. However, if the seed that Jennifer planted grew into corn, then the corn would have popped up out of the ground. 
+Answer: unsure 
+
+Sentence: The seed would have grown into an orange tree. 
+Answer: orange tree 
+ 
+Sentence: an orange tree 
+Answer: orange tree 
+ 
+Sentence: The seed that Jennifer planted would have grown into an orange tree, as that is the type of tree that is typically found in that part of the world. 
+Answer: orange tree 
+
+Sentence: A strawberry popped up out of the ground. 
+Answer: strawberry 
+ 
+Sentence: Strawberry 
+Answer: strawberry 
+ 
+Sentence: When the seed that Jennifer took out of the flower grew, a strawberry popped out of the ground. 
+Answer: strawberry 
+
+Sentence: The seed grew into a dandelion. 
+Answer: dandelion 
+ 
+Sentence: A dandelion. 
+Answer: dandelion 
+ 
+Sentence: Most likely, a dandelion would have popped up out of the ground, since that is what Jennifer planted the seed with. However, there is a chance that a rose could have also grown, since that is the seed's origins. 
+Answer: dandelion 
+
+Sentence: It would be a coconut tree. 
+Answer: coconut tree 
+ 
+Sentence: A coconut tree. 
+Answer: coconut tree 
+ 
+Sentence: When the seed Jennifer took out of the grape grew, a coconut tree popped up out of the ground. 
+Answer: coconut tree 
+
+Sentence: The seed that Jennifer planted grew into a plum tree. 
+Answer: plum tree 
+ 
+Sentence: A plum tree. 
+Answer: plum tree 
+ 
+Sentence: It depends on the species of peach tree and plum tree. If it was a peach tree, then a peach tree would pop up out of the ground. If it was a plum tree, then a plum tree would pop up out of the ground. 
+Answer: unsure 
+
+--------------------------------------------------------
+
+Sentence: Since the animal has been altered to look like a goat, it is now considered a goat. 
+Answer: goat 
+ 
+Sentence: It is now a goat. 
+Answer: goat 
+ 
+Sentence: The animal is neither a sheep nor a goat, but rather a mutt - a cross between the two. 
+Answer: hybrid 
+
+Sentence: After the operation, the animal was a lion. 
+Answer: lion 
+ 
+Sentence: A lion. 
+Answer: lion 
+ 
+Sentence: This animal would be considered a lion after the operation, as it would have the mane of a lion. However, it would still have the DNA of a tiger, so it would technically be a hybrid between the two animals. 
+Answer: hybrid 
+
+Sentence: End result, it was a turkey. 
+Answer: turkey 
+ 
+Sentence: A turkey. 
+Answer: turkey 
+ 
+Sentence: After the operation, the chicken resembled a turkey more than it did a chicken. However, it was still technically a chicken. 
+Answer: chicken 
+
+Sentence: This was a raccoon that had been surgically altered to look like a skunk. 
+Answer: raccoon 
+ 
+Sentence: A skunk. 
+Answer: skunk 
+ 
+Sentence: It depends on how you define a skunk. If you consider a skunk to be any animal that has the appearance of a skunk, then the answer would be that this is a skunk. However, if you consider a skunk to be a specific species of animal, then the answer would be that this is a raccoon that has been surgically altered to look like a skunk. 
+Answer: hybrid 
+
+Sentence: This animal was a zebra. 
+Answer: zebra 
+ 
+Sentence: It was a zebra. 
+Answer: zebra 
+ 
+Sentence: The animal would technically be considered a horse, as that is its species. However, it has been altered so significantly that it would be more accurately described as a zebra. 
+Answer: horse 
+
+Sentence: It would be lead with a gold-colored coating. 
+Answer: lead 
+ 
+Sentence: It was lead. 
+Answer: lead 
+ 
+Sentence: It would be lead, since they started with a bar of lead and simply added a dye to it. Real gold would not have been used in this scenario. 
+Answer: lead 
+
+Sentence: The doctors created an orange out of a grapefruit by adding orange food coloring and sugar. 
+Answer: orange 
+ 
+Sentence: This is an orange. 
+Answer: orange 
+ 
+Sentence: The doctors transformed the grapefruit into an orange through their shots of orange food coloring and sugar. Therefore, the final product was an orange. 
+Answer: orange 
+
+Sentence: The doctors had a type of flute after the operation. 
+Answer: flute 
+ 
+Sentence: A type of flute. 
+Answer: flute 
+ 
+Sentence: It depends on how you look at it. The doctors took a kitchen pipe and cut off a section to use as a flute. So technically, they still have a kitchen pipe. However, the section they cut off is now a flute. 
+Answer: kitchen pipe 
+
+Sentence: The doctors had toilet paper. 
+Answer: toilet paper 
+ 
+Sentence: Toilet paper. 
+Answer: toilet paper 
+ 
+Sentence: After the operation, the doctors had toilet paper. 
+Answer: toilet paper 
+
+Sentence: After they completed the operation, they had a boot. 
+Answer: boot 
+ 
+Sentence: They had a boot. 
+Answer: boot 
+ 
+Sentence: It depends on how you define "operation." If you consider the act of cutting and sewing the tire to be the operation, then the doctors ended up with a boot. However, if you consider the original purpose of the operation to be to create a boot from a tire, then the doctors would have considered the operation to be a success even if they ended up with a tire that looked like a boot. 
+Answer: hybrid 
+
+Sentence: They ended up with flipflop sandals. 
+Answer: flip flop 
+ 
+Sentence: They had flipflop sandals. 
+Answer: flip flop 
+ 
+Sentence: They had a plastic bottle with four strips of plastic attached to it that looked like flipflops. 
+Answer: plastic bottle 
+
+Sentence: When they were done, they had a chair. 
+Answer: chair 
+ 
+Sentence: They had a chair. 
+Answer: chair 
+ 
+Sentence: The doctors created a chair from a garbage can. 
+Answer: chair 
+
+Sentence: Technically, it is still a coffeepot, but it has been transformed into a birdfeeder. 
+Answer: coffeepot 
+ 
+Sentence: This is a birdfeeder. 
+Answer: birdfeeder 
+ 
+Sentence: This was originally a coffeepot, but after the doctors performed their operations, it became a birdfeeder. 
+Answer: birdfeeder 
+
+Sentence: The doctors had sewing needles after the operation. 
+Answer: needle 
+ 
+Sentence: The doctors had needles. 
+Answer: needle 
+ 
+Sentence: Poking a hole into the end of a bobby pin does not necessarily turn it into a sewing needle - so the doctors could still have a bobby pin, albeit a damaged one. 
+Answer: bobby pin 
+
+Sentence: The doctors had shoelaces. 
+Answer: shoelace 
+ 
+Sentence: Shoelaces 
+Answer: shoelace 
+ 
+Sentence: The doctors would have shoelaces after cutting the necktie into thin strips and attaching plastic tabs to the ends. 
+Answer: shoelace 
+
+---------------------------------------------------------------
+
+Sentence: The baby is now an adult pig. 
+Answer: pig 
+ 
+Sentence: It is a pig. 
+Answer: pig 
+ 
+Sentence: The baby is an adult cow. 
+Answer: cow 
+
+Sentence: The baby is now an adult turkey. 
+Answer: turkey 
+ 
+Sentence: The baby is a turkey. 
+Answer: turkey 
+ 
+Sentence: Now that the baby is an adult, it is a turkey. It was raised by turkeys and never had any interaction with pigeons, so it considers itself a turkey. 
+Answer: turkey 
+
+Sentence: The baby is now an adult toad. 
+Answer: toad 
+ 
+Sentence: The animal is a toad. 
+Answer: toad 
+ 
+Sentence: The adult is most likely a toad, since it grew up with toads and never saw another turtle. 
+Answer: toad 
+
+-------------------------------------------------------
+
+Sentence: The adult is most likely a pig since it grew up with pigs and never saw another cow. 
+Answer: pig 
+ 
+Sentence: The baby is now an adult pig. 
+Answer: pig 
+ 
+Sentence: The adult is likely a pig, since it was raised by pigs and never saw another cow. 
+Answer: pig 
+
+Sentence: The adult is likely to be a seagull, as it was raised by them and never saw another cardinal. 
+Answer: seagull 
+ 
+Sentence: The baby is now an adult seagull. 
+Answer: seagull 
+ 
+Sentence: The animal is a seagull. It was raised by seagulls and never saw another cardinal, so it identifies as a seagull. 
+Answer: seagull 
+
+Sentence: The baby is now an adult toad. 
+Answer: toad 
+ 
+Sentence: The animal is a toad. 
+Answer: toad 
+ 
+Sentence: The adult is most likely a toad, since it grew up with toads and never saw another turtle. 
+Answer: toad 
+
+--------------------------------------------------
+
+Sentence: Based on the scenario, it seems that the baby would be a raccoon. 
+Answer: raccoon 
+ 
+Sentence: The baby is a raccoon. 
+Answer: raccoon 
+ 
+Sentence: The answer to this question is a bit tricky. Technically, the baby is a rabbit, since that is the species of animal that gave birth to it. However, since the baby was raised by raccoons, it is likely that it would identify more with raccoons than with rabbits. In other words, the baby would probably behave more like a raccoon than a rabbit. 
+Answer: rabbit 
+
+Sentence: The baby would be a raccoon, since it grew up with them and had their blood. 
+Answer: raccoon 
+ 
+Sentence: A raccoon. 
+Answer: raccoon 
+ 
+Sentence: The baby is actually a raccoon. Even though it was born from a rabbit, it was raised by raccoons and had raccoon blood running through its veins. 
+Answer: raccoon 
+
+Sentence: The baby was a deer, but it grew up thinking it was a sheep. 
+Answer: deer 
+ 
+Sentence: The baby is a sheep. 
+Answer: sheep 
+ 
+Sentence: Although the baby was born a deer, it was raised by sheep and never interacted with deer, so it would be more like a sheep in behavior. 
+Answer: deer 
+
+Sentence: The baby grew up to be a sheep. 
+Answer: sheep 
+ 
+Sentence: A sheep. 
+Answer: sheep 
+ 
+Sentence: The answer could be either a deer or a sheep. If the baby grew up never seeing another deer, and only had sheep blood, then it would be more likely that the baby would identify as a sheep. However, if the baby was raised around both deer and sheep, then it might identify as either one. 
+Answer: hybrid
+
+--------------------------------------------------------------
+
+Sentence: The animal was more typical of a worm before it changed. 
+Answer: worm 
+ 
+Sentence: Before it changed, the animal was more typical of a worm. 
+Answer: worm 
+ 
+Sentence: Arguably, the animal was more typical of a worm before it changed. It had a segmented body, no arms or legs, and it burrowed into the soil. However, after it changed, it became more typical of a snail. It began carrying a small shell around on its back, grew two short antennae from its head, and left a slimy trail wherever it went. 
+Answer: worm 
+
+Sentence: All animals are more typical of themselves before they change. 
+Answer: worm 
+ 
+Sentence: Worm 
+Answer: worm 
+ 
+Sentence: Looking at the scenario given, it would appear that the animal was more typical of a worm before it changed. This is because it burrowed into the soil, had a segmented body, and did not have any arms or legs. Once it began to change, however, and grew a small shell and two antennae, it began to look and act more like a snail. 
+Answer: worm 
+
+Sentence: The animal was more typical of a snake before it changed. 
+Answer: snake 
+ 
+Sentence: snake 
+Answer: snake 
+ 
+Sentence: Based on the description given, the animal was more typical of a snake than a lizard. 
+Answer: snake 
+
+Sentence: The animal was more typical of a snake before it changed. 
+Answer: snake 
+ 
+Sentence: Snake 
+Answer: snake 
+ 
+Sentence: Although it looked and acted like a snake, the animal was more typical of a lizard. This is because it was undergoing natural processes of change that led it to develop characteristics more typical of a lizard. Once the animal developed these characteristics, it began to look and act more like a snake. 
+Answer: lizard 
+
+Sentence: The animal was more typical of a hummingbird before it changed. 
+Answer: hummingbird 
+ 
+Sentence: more typical of a hummingbird 
+Answer: hummingbird 
+ 
+Sentence: The animal's original form was more typical of a hummingbird. However, after it changed as a result of environmental contamination, it became more like a bee in terms of appearance and behavior. 
+Answer: hummingbird 
+
+Sentence: The animal was more typical of a hummingbird before it changed. 
+Answer: hummingbird 
+ 
+Sentence: More typical of a hummingbird 
+Answer: hummingbird 
+ 
+Sentence: The animal was more typical of a hummingbird before it changed. It had wings and feathers, and it lived on the nectar of flowers. After it changed, it was more typical of a bee. It had transparent wings and a black and yellow striped body, and it always buzzed about. 
+Answer: hummingbird 
+
+Sentence: The animal was more typical of a horse. 
+Answer: horse 
+ 
+Sentence: zebra. 
+Answer: zebra 
+ 
+Sentence: Before it changed, the animal was clearly more typical of a horse. But once it developed black and white stripes and began to look and act like a zebra, it became more typical of a zebra. 
+Answer: horse 
+
+Sentence: The animal was more typical of a horse before it changed. 
+Answer: horse 
+ 
+Sentence: More typical of a horse. 
+Answer: horse 
+ 
+Sentence: Before it changed, the animal was more typical of a horse because it had the same physical features and behavior. However, after it developed black and white stripes, it became more typical of a zebra. 
+Answer: horse 
+
+------------------------------------------------------------
+
+Sentence: The animal was more typical of a worm before it changed. 
+Answer: worm 
+ 
+Sentence: Worm 
+Answer: worm 
+ 
+Sentence: The animal was more typical of a worm before it changed. 
+Answer: worm 
+
+Sentence: The animal was more typical of a worm before it began to change. 
+Answer: worm 
+ 
+Sentence: snail. 
+Answer: snail 
+ 
+Sentence: Before it changed, the animal was more typical of a worm. After it changed, the animal was more typical of a snail. 
+Answer: worm 
+
+Sentence: The animal was more typical of a snake before it changed. 
+Answer: snake 
+ 
+Sentence: Before it changed, the animal was more typical of a snake. 
+Answer: snake 
+ 
+Sentence: Before it changed, the animal was more typical of a snake. 
+Answer: snake 
+
+Sentence: The animal was more typical of a snake before it changed. 
+Answer: snake 
+ 
+Sentence: The animal was more typical of a snake. 
+Answer: snake 
+ 
+Sentence: Before the animal changed, it was more typical of a snake. 
+Answer: snake 
+
+Sentence: The animal was more typical of a hummingbird before it changed. 
+Answer: hummingbird 
+ 
+Sentence: Hummingbird 
+Answer: hummingbird 
+ 
+Sentence: If we are simply looking at the physical attributes of the animal, then it would be more typical of a hummingbird. However, if we take into account the fact that it fed on nectar, then it would be more typical of a bee. 
+Answer: hybrid 
+
+Sentence: The animal was more typical of a hummingbird before it changed. 
+Answer: hummingbird 
+ 
+Sentence: Hummingbird 
+Answer: hummingbird 
+ 
+Sentence: If we are simply looking at the physical attributes of the animal, then it would be more typical of a hummingbird. However, if we take into account the fact that it fed on nectar, then it would be more typical of a bee. 
+Answer: hybrid 
+
+Sentence: The animal was more typical of a horse before it changed. 
+Answer: horse 
+ 
+Sentence: A horse. 
+Answer: horse 
+ 
+Sentence: Before the animal changed, it was more typical of a horse. 
+Answer: horse 
+
+Sentence: The animal was more typical of a horse before it changed. 
+Answer: horse 
+ 
+Sentence: A horse. 
+Answer: horse 
+ 
+Sentence: Before the animal changed, it was more typical of a horse. 
+Answer: horse 
+
+----------------------------------------------------
+
+Sentence: No, gold would not still be gold if it were in all ways like gold except that it was not atomic number 79. 
+Answer: no 
+ 
+Sentence: No, it would not be gold. 
+Answer: no 
+ 
+Sentence: Gold would still be gold if it were in all ways like gold except that it was not atomic number 79. 
+Answer: yes 
+
+Sentence: Gold would still be gold in this hypothetical situation. 
+Answer: yes 
+ 
+Sentence: No, it would not. 
+Answer: no 
+ 
+Sentence: Most likely not, as gold is often used in dental work because of its inertness, meaning it does not corrode or tarnish over time. 
+Answer: no 
+
+Sentence: Yes, gold would still be gold if it were red. 
+Answer: yes 
+ 
+Sentence: no 
+Answer: no 
+ 
+Sentence: Gold is classified as a metal, and specifically as a noble metal, based on its chemical properties. These properties would not change if the color of gold were to change. Therefore, gold would still be gold if it were red. 
+Answer: yes 
+
+Sentence: No, water would not still be water if it were in all ways like water except that it was not formula H2O. 
+Answer: no 
+ 
+Sentence: No, it would not. 
+Answer: no 
+ 
+Sentence: The chemical formula for water is H2O, which means that it is made up of two hydrogen atoms and one oxygen atom. If water were to have a different chemical formula, it would no longer be water. 
+Answer: no 
+
+Sentence: Yes, water would still be water even if it tasted too bad to drink. 
+Answer: yes 
+ 
+Sentence: No, it would not be water. 
+Answer: no 
+ 
+Sentence: No, it would not be water. Water is defined by its chemical composition, which includes the property of being potable. If it were not potable, it would not be water. 
+Answer: no 
+
+Sentence: Yes, if water were opaque green it would still be water. 
+Answer: yes 
+ 
+Sentence: Yes, it would. 
+Answer: yes 
+ 
+Sentence: There is no definitive answer to this question since it is based on a hypothetical situation. However, some people might argue that water would no longer be considered water if it were opaque green, since one of the defining characteristics of water is its clear color. Others might argue that water would still be water even if it were opaque green, since the chemical composition of water would not have changed. 
+Answer: maybe 
+
+Sentence: No, a tree would not be a tree if it were in all ways like a tree except that its chromosomal structure changed. 
+Answer: no 
+ 
+Sentence: No 
+Answer: no 
+ 
+Sentence: If a tree's chromosomal structure changed, it would no longer be able to produce offspring that are genetically identical to itself. Therefore, it would not be considered a tree. 
+Answer: no 
+
+Sentence: No, a tree would not still be a tree if it were in all ways like a tree except that its wood did not burn. 
+Answer: no 
+ 
+Sentence: No, it would not. 
+Answer: no 
+ 
+Sentence: No, a tree would not still be a tree if it were in all ways like a tree except that its wood did not burn. The burning of wood is one of the defining characteristics of trees, and without that ability, a tree would be a very different type of plant. 
+Answer: no 
+
+Sentence: The tree would still be a tree if it had a translucent trunk. 
+Answer: yes 
+ 
+Sentence: I don't know. 
+Answer: maybe 
+ 
+Sentence: No. A tree is defined as a woody, perennial plant with a single trunk. If a tree had a translucent trunk, it would not be considered a tree. 
+Answer: no 
+
+Sentence: Yes, a TV would still be a TV if it were in all ways like a TV except that its screen was not made of glass. 
+Answer: yes 
+ 
+Sentence: Yes 
+Answer: yes 
+ 
+Sentence: There is no definitive answer to this question since it is somewhat hypothetical. However, it is reasonable to think that a TV with a non-glass screen would still be considered a TV. 
+Answer: maybe 
+
+Sentence: No, a TV would not still be a TV if it were in all ways like a TV except that it did not have visible picture. 
+Answer: no 
+ 
+Sentence: No, it would not be a TV. 
+Answer: no 
+ 
+Sentence: If a TV did not have visible picture, it would essentially be a blank screen. While it would still technically be classified as a TV, it would not be functional as one. 
+Answer: yes 
+
+Sentence: Yes, a TV would still be a TV if it were in all ways like a TV except that it was not boxlike. 
+Answer: yes 
+ 
+Sentence: No 
+Answer: no 
+ 
+Sentence: A TV would still be a TV if it were not boxlike, as long as it possessed all the other defining characteristics of a TV. These include a display screen, television circuitry and a tuner. 
+Answer: yes 
+
+Sentence: Yes, a record could still be a record if it were made of another material, like metal or glass. 
+Answer: yes 
+ 
+Sentence: Yes 
+Answer: yes 
+ 
+Sentence: Yes, a record would still be a record if it were made of another material like metal or glass. The material does not define what a record is, rather it is the grooves on the surface of the disc that are used to interpret the sound. 
+Answer: yes 
+
+Sentence: No, a record would not still be a record if it were always like a record except that there was no music when played. 
+Answer: no 
+ 
+Sentence: I'm not sure what you're asking. 
+Answer: maybe 
+ 
+Sentence: If a record were all ways like a record except that there was no music when played, then it would not be a record. 
+Answer: no 
+
+Sentence: No, a record would not still be a record if it were not round. 
+Answer: no 
+ 
+Sentence: No 
+Answer: no 
+ 
+Sentence: There is no definitive answer to this question. It depends on how you define a "record." If you believe that a record must be a circular disc, then the answer is no - a non-circular disc would not be considered a record. However, if you believe that a record is simply a musical recording, then the answer is yes - a non-circular disc could still be considered a record. 
+Answer: maybe 
+
+Sentence: It would still be a pencil. 
+Answer: yes 
+ 
+Sentence: No, it would not be a pencil. 
+Answer: no 
+ 
+Sentence: Probably not. A pencil is typically made of lead or graphite, so if it were made of something else, it might not be considered a pencil anymore. 
+Answer: no 
+
+Sentence: No, a pencil would not still be a pencil if it could not be used to write. 
+Answer: no 
+ 
+Sentence: No, it would not be a pencil. 
+Answer: no 
+ 
+Sentence: While a pencil that cannot write might seem like something of a contradiction, the answer to this question is yes. A pencil would still be considered a pencil even if it were unable to write. This is because a pencil is defined as a thin stick of graphite with a wood casing. The function of writing is not essential to the definition of a pencil. 
+Answer: yes 
+
+Sentence: No, a pencil would not be a pencil if it were not cylindrical. 
+Answer: no 
+ 
+Sentence: A pencil would not be a pencil if it were not cylindrical in shape. 
+Answer: no 
+ 
+Sentence: No, it would not be a pencil. A pencil is defined as a cylindrical object used for writing or drawing, typically consisting of a core of graphite surrounded by a wooden case. If an object is not cylindrical, it cannot be a pencil. 
+Answer: no 
+
+Sentence: No. rubber is a necessary component of a tire. 
+Answer: no 
+ 
+Sentence: No, it would not be a tire. 
+Answer: no 
+ 
+Sentence: No, it would not be a tire. A tire is defined as a rubber or metal ring that is placed around the rim of a wheel to form a tight seal. If a tire were not made of rubber, it would not be able to form a tight seal and would not be a functional tire. 
+Answer: no 
+
+Sentence: No, a tire would not still be a tire if it were in all ways like a tire except that it could not roll. 
+Answer: no 
+ 
+Sentence: No 
+Answer: no 
+ 
+Sentence: Interestingly enough, this is a question that has been debated by philosophers and linguists for many years. The general consensus is that, no, a tire would not still be a tire if it were in all ways like a tire except that it could not roll. 
+Answer: no 
+
+Sentence: No, a tire would not be a tire if it were not filled with air. 
+Answer: no 
+ 
+Sentence: It would not be a tire. 
+Answer: no 
+ 
+Sentence: A tire without air would not be a tire. A tire is defined as a "the tough elastic webbing of reinforcing cords embedded in a rubber ring that covers the rim of a wheel." The air is what gives the tire its shape and allows it to function as intended. Without air, the tire would be a flat, rubbery object. 
+Answer: no 
+
+Sentence: No, a mirror would not still be a mirror if it were in all ways like a mirror except that it was not made of glass. 
+Answer: no 
+ 
+Sentence: Yes, it would still be a mirror. 
+Answer: yes 
+ 
+Sentence: A mirror is defined as a surface that reflects light in a way that enables an image to be seen. So, if a mirror were made of a material other than glass, it would still be considered a mirror. 
+Answer: yes 
+
+Sentence: No, a mirror would not be a mirror if it did not reflect an image. 
+Answer: no 
+ 
+Sentence: No, it would not. 
+Answer: no 
+ 
+Sentence: If a mirror did not reflect an image, it would no longer be a mirror. A mirror is defined as a surface that reflects light in order to create an image. Without reflection, there would be no image and therefore the surface would not be considered a mirror. 
+Answer: no 
+
+Sentence: No, a mirror would not be a mirror if it were not hard. 
+Answer: no 
+ 
+Sentence: I am not sure. 
+Answer: maybe 
+ 
+Sentence: While a mirror is classically defined as a reflective surface that forms an image of an object, if a surface were to reflect an image in the same way but wasn't hard, one could still consider it a mirror. 
+Answer: yes 

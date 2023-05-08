@@ -1,62 +1,63 @@
-# Project name
+# You are what you're for: Essentialist categorization in large language models
 
-## General points
+This repository contains the experiments, data, analyses, and figures for the paper "You are what you're for: Essentialist categorization in large language models" by Siying Zhang, Jingyuan She, Tobias Gerstenberg and David Rose.
 
-- for folder and file names: 
-	+ don't use white space in either folder or filenames, use an underscore "_" instead
-	+ (almost always) use lower case only
-- always use relative paths in your code
-	+ for example, to save a figure from an R script inside the `code/R/` folder the path should be "../../figures/figure_name.pdf"
-- keep your folder structure organized
-	+ we recommend adhering to the folder structure in this repository 
-	+ more complex projects may have additional folders such as `videos/`, `papers/`, ...
-- note: some of the folders are empty except for a `.keep` file
-	+ the `.keep` file is just there to make sure that github includes the otherwise empty folder 
-	+ feel free to delete the `.keep` file once you've added another file to that folder
-- each code subfolder has a readme file that should be updated with information about the code scripts 
-- use github issues to keep track of any larger decisions that we make along the way 
-- make sure to create a slack channel for each project, link up the github repository with the slack channel, and add the people working on the project to the github repo and slack channel 
-- see our lab wiki for more help: https://github.com/cicl-stanford/wiki/wiki
+__Contents__:
+- [Introduction](#introduction)
+- [Repository structure](#repository-struture)
 
-## Repository structure 
+## Introduction
+
+<!-- <img src="figures/trial_agent.png" width="45%" align="left">
+<img src="figures/trial_object.png" width="45%" align="right">
+
+<br clear="left" />
+<br clear="right" /> --> 
+
+How do essentialist beliefs about categories arise? We hypothesize that such beliefs are transmitted via language. We subject large language models (LLMs) to vignettes from the literature on essentialist categorization and find that they align well with people when the studies manipulated teleological information -- information about what something is for. We examine whether in a classic test of essentialist categorization -- the transformation task -- LLMs prioritize teleological properties over information about what something looks like, or is made of. Experiments 1 and 2 find that telos and what something is made of matter more than appearance. Experiment 3 manipulates all three factors and finds that what something is <i>for</i> matters more than what it's <i>made of</i>. Overall, these studies suggest that language alone may be sufficient to give rise to essentialist beliefs, and that information about what something is for matters more. 
+
+## Repository structure
 
 ```
+├── analysis
 ├── code
-│   ├── R
-│   ├── bash
 │   ├── experiments
 │   └── python
 ├── data
+│   ├── analysis_of_prior_work
+│   ├── experiment1
+│   ├── experiment2
+│   └── experiment3
 ├── figures
-├── papers
-├── presentation
+│   ├── analysis_of_prior_work
+│   ├── experiment1
+│   ├── experiment2
+│   └── experiment3
 └── writeup
 ```
 
-### code 
-
-Put all your code here. Use a separate folder for scripts based on the programming language. 
-
-#### experiments 
-
-The experiments folder is for the online (or in lab) experiments. Each experiment should be in its own folder. When you run another experiment, make sure to create a new folder (so that we always know what an experiment looked like when it was run). In readme file for the experiments folder, provide a brief summary of each experiment. Also note down any additional information that may not be saved within each experiment (e.g. how much the payment was for MTurk participants).
-
-### data 
-
-Put your raw data files here. Any data wrangling to that file should happen in your code scripts. 
-
-### figures 
-
-Save all your figures here. You may want to include additional subfolder here such as `plots/`, `diagrams/` etc. 
-
-### papers 
-
-Put research papers here that are relevant for your project. 
-
-### presentation
-
-Put your project presentation here (e.g. your keynote, powerpoint, google slides, or pdf file).
-
-### writeup 
-
-Put all your writing here. This folder structure is likely to expand for more complex projects. For example, you could add a subfolders like folders `journal/cognition/submission/`, `proceedings/cogsci/resubmission/` etc. 
+- `analysis/` contains all the code for analyzing data and generating figures, written in R
+  (view a rendered file [here](https://cicl-stanford.github.io/responsibility_replacement/)).
+- `code/` contains all the materials and code for the experiments.
+  - `experiments` contains materials for each experiment that was run. 
+  	- `analysis_of_prior_work` was run on GPT-3 (Model: text-curie-001) and BLOOM. `exp1_tasks_collection_essentialism.csv` was read into the python script and the language models' responses were appended to the end of the CSV file. The completed file was saved to `data/`.   Likewise for the `experiment1`, `experiment2` and `experiment3`.  ** Note that the data for `analysis_of_prior_work` were saved by studies. 
+	- `experiment1`, `experiment2` and `experiment3`, were run on GPT-3 (Model: text-davinci-002) and BLOOM. 
+  - `python` contains scripts that were used to run the experiments. 
+    - `aopw_gpt3_response_generator.ipynb`, `experiment1_gpt3_response_generator.ipynb`,     `experiment2_gpt3_response_generator.ipynb`, `experiment3_gpt3_response_generator.ipynb`,
+    `aopw_bloom_response_generator.ipynb`, `experiment1_bloom_response_generator.ipynb`,
+    `experiment2_bloom_response_generator.ipynb` and `experiment3_bloom_response_generator.ipynb` are for generating language models' responses.
+    - `aopw_gpt3_answer_retrieval_cached.ipynb` and `aopw_bloom_answer_retrieval_cached.ipynb` are for the data processing task in `analysis_of_prior_work` by training GPT-3 (Model: text-curie-001) to retrieve single-word responses from the full text responses that were generated by querying the language models. 
+    **_NOTE:_** These two files were <i>ONLY</i> used for processing the data in `analysis_of_prior_work`. 
+    - `aopw_alignment_analysis_of_prior_work_GPT3.ipynb` and `aopw_alignment_analysis_of_prior_work_BLOOM.ipynb` are for obtaining the degree of alignment with people's categorization judgments by studies in  `analysis_of_prior_work`. 
+- `data/` contains all data from all experiments. 
+  - For `analysis_of_prior_work`: 
+    - `aopw_gpt3_response_by_study` and `aopw_bloom_response_by_study` hold the unprocessed raw data that resulted from querying the language models.
+    - `aopw_gpt3_response_by_study_answer_retrieved` and `aopw_bloom_response_by_study_answer_retrieved` hold the processed data that were obtained after the answer retrieval task, which were used for generating the figures in `figures/`. 
+  - For `experiment1`: 
+    - `experiment1_gpt3_unprocessed` and `experiment1_bloom_unprocessed` hold the unprocessed data that resulted from querying the language models.
+    - `experiment1_gpt3_answer_retrieved` and `experiment1_bloom_answer_retrieved` hold the processed data that were obtained after the answer retrieval task. 
+    **_NOTE:_**  For this and all subsequent experiments, two independent coders extracted item names from responses, cross-checking each other's work to ensure accuracy. Any discrepancies were marked as "unsure."
+  - Likewise for `experiment2` and `experiment3`.
+  
+- `figures/` contains all the figures from the paper (generated using the script in `analysis/`).
+- `writeup/` contains the final version of the paper
