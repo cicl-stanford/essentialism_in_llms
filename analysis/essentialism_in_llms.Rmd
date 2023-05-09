@@ -1,0 +1,1841 @@
+---
+title: "You are what you're for: Essentialist categorization in large language models"
+author: "Siying Zhang, Jingyuan S. She, Tobias Gerstenberg and David Rose"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  bookdown::html_document2:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    theme: cosmo
+    highlight: tango
+---
+
+# Setup
+```{r}
+library("brms")           # for Bayesian data analysis
+library("knitr")      # for knitting  
+library("pwr")        # for power analysis
+library("Hmisc")      # for bootstrapped confidence intervals 
+library("patchwork")  # for making figure panels 
+library("corrr")      # for dealing with correlations 
+library("mctest")     # multi-collinearity testing 
+library("janitor")    # for cleaning variables
+library("xtable")         # for saving tables
+library("emmeans")        # for comparing models
+library("tidybayes")      # for tidying up results from Bayesian models
+library("broom.mixed")    # for tidying things up
+library("tidyverse")      # for everything else
+
+knitr::opts_chunk$set(echo = T, warning = F, message = F)
+
+# set default plot theme 
+theme_set(theme_classic() + 
+            theme(text = element_text(size = 14))) 
+
+
+# use contrast coding to interpret effects from categorical variables as main effects
+options(contrasts = c("contr.sum", "contr.poly"))
+
+figures_dir = '../figures/'
+data_dir = '../data/'
+
+```
+
+# EXPERIMENT 1 Telos vs. Appearance
+## Data
+### GPT-3
+#### Non living natural kinds
+
+```{r}
+df.exp1.gpt3.non_living_natural_kinds = read_csv(paste0(data_dir, 'experiment1/experiment1_gpt3_answer_retrieved/experiment1_gpt3_non_living_natural_kinds_answer_retrieved.csv'),
+                                              # Hiding the column types to make the output cleaner
+                                              show_col_types = F) %>% 
+  # Selecting specific columns to keep
+  select(c(-(category : items), -whose_appearance, -whose_telo, -(scenario_1 : gpt3_response_scenario_1), -gpt3_response_scenario_2)) %>% 
+  # Converting the data set from wide to long format
+  pivot_longer(cols = c(gpt3_response_scenario_1_retrieved : gpt3_response_scenario_2_retrieved),
+               names_to = "purpose_order",  
+               values_to = "response") %>% 
+  # Renaming the values in the "purpose_order" column
+  # "purpose_first" means the purpose sentence appears before the appearance sentence
+  # "purpose_second" means the appearance sentence appears before the purpose sentence
+  mutate(purpose_order = ifelse(purpose_order == "gpt3_response_scenario_1_retrieved", "purpose_second",
+                                "purpose_first")) %>% 
+  filter(response != "unsure") %>% 
+  # Categorizing responses as either "original thing" or "new thing"
+  mutate(response = case_when(item_original == "lightning" & response %in% c("lightning") ~
+                                "original_thing",
+                              item_original == "lightning" & response %in% c("cloud", "sun", "soil") ~
+                                "new_thing",
+                              item_original == "cloud" & response %in% c("cloud") ~
+                                "original_thing",
+                              item_original == "cloud" & response %in% c("lightning", "sun", "soil") ~
+                                "new_thing",
+                              item_original == "sun" & response %in% c("sun") ~
+                                "original_thing",
+                              item_original == "sun" & response %in% c("cloud", "lightning", "soil") ~
+                                "new_thing",
+                              item_original == "soil" & response %in% c("soil") ~
+                                "original_thing",
+                              item_original == "soil" & response %in% c("cloud", "sun", "lightning") ~
+                                "new_thing"),
+         # Converting the "response" column to a binary column
+         response = ifelse(str_detect(response, "new_thing"), 1, 0)) %>% 
+  mutate(kind = rep("Non-living natural kind"))
+```
+
+#### Living natural kinds
+
+```{r}
+df.exp1.gpt3.living_natural_kinds = read_csv(paste0(data_dir, 'experiment1/experiment1_gpt3_answer_retrieved/experiment1_gpt3_living_natural_kinds_answer_retrieved.csv'),
+                                              show_col_types = F) %>%
+  select(c(-(category : items), -whose_appearance, -whose_telo, -(scenario_1 : gpt3_response_scenario_1), -gpt3_response_scenario_2)) %>% 
+  pivot_longer(cols = c(gpt3_response_scenario_1_retrieved : gpt3_response_scenario_2_retrieved),
+               names_to = "purpose_order",
+               values_to = "response") %>% 
+  mutate(purpose_order = ifelse(purpose_order == "gpt3_response_scenario_1_retrieved", "purpose_second",
+                                "purpose_first")) %>% 
+  filter(response != "unsure") %>% 
+  mutate(response = case_when(item_original == "chicken" & response %in% c("chicken") ~
+                                "original_thing",
+                              item_original == "chicken" & response %in% c("cow", "worm", "bat") ~
+                                "new_thing",
+                              item_original == "cow" & response %in% c("cow") ~
+                                "original_thing",
+                              item_original == "cow" & response %in% c("chicken", "worm", "bat") ~
+                                "new_thing",
+                              item_original == "worm" & response %in% c("worm") ~
+                                "original_thing",
+                              item_original == "worm" & response %in% c("chicken", "cow", "bat") ~
+                                "new_thing",
+                              item_original == "bat" & response %in% c("bat") ~
+                                "original_thing",
+                              item_original == "bat" & response %in% c("chicken", "cow", "worm") ~
+                                "new_thing"),
+         response = ifelse(str_detect(response, "new_thing"), 1, 0))  %>% 
+  mutate(kind = rep("Living natural kind"))
+```
+
+
+#### Artifacts
+
+```{r}
+df.exp1.gpt3.artifacts = read_csv(paste0(data_dir, 'experiment1/experiment1_gpt3_answer_retrieved/experiment1_gpt3_artifacts_answer_retrieved.csv'),
+                                              show_col_types = F) %>%
+  select(c(-(category : items), -whose_appearance, -whose_telo, -(scenario_1 : gpt3_response_scenario_1), -gpt3_response_scenario_2)) %>% 
+  pivot_longer(cols = c(gpt3_response_scenario_1_retrieved : gpt3_response_scenario_2_retrieved),
+               names_to = "purpose_order",
+               values_to = "response") %>% 
+  mutate(purpose_order = ifelse(purpose_order == "gpt3_response_scenario_1_retrieved", "purpose_second",
+                                "purpose_first")) %>% 
+  filter(response != "unsure") %>% 
+  mutate(response = case_when(item_original == "bed" & response %in% c("bed") ~
+                                "original_thing",
+                              item_original == "bed" & response %in% c("microwave", "lotion", "keychain") ~
+                                "new_thing",
+                              item_original == "microwave" & response %in% c("microwave") ~
+                                "original_thing",
+                              item_original == "microwave" & response %in% c("bed", "lotion", "keychain") ~
+                                "new_thing",
+                              item_original == "lotion" & response %in% c("lotion") ~
+                                "original_thing",
+                              item_original == "lotion" & response %in% c("bed", "microwave", "keychain") ~
+                                "new_thing",
+                              item_original == "keychain" & response %in% c("keychain") ~
+                                "original_thing",
+                              item_original == "keychain" & response %in% c("bed", "microwave", "lotion") ~
+                                "new_thing"),
+         response = ifelse(str_detect(response, "new_thing"), 1, 0)) %>% 
+  mutate(kind = rep("Artifact"))
+```
+
+#### GPT-3 Aggregated
+```{r}
+df.exp1.gpt3.aggregated = df.exp1.gpt3.non_living_natural_kinds %>%
+  bind_rows(df.exp1.gpt3.living_natural_kinds, df.exp1.gpt3.artifacts)
+```
+
+
+### BLOOM
+#### Non living natural kinds
+
+```{r}
+df.exp1.bloom.non_living_natural_kinds = read_csv(paste0(data_dir, 'experiment1/experiment1_bloom_answer_retrieved/experiment1_bloom_non_living_natural_kinds_answer_retrieved.csv'),
+                                              # Hiding the column types to make the output cleaner
+                                              show_col_types = F) %>%
+  select(c(-(category : items), -whose_appearance, -whose_telo, -(scenario_1 : bloom_response_scenario_1), -bloom_response_scenario_2)) %>% 
+  pivot_longer(cols = c(bloom_response_scenario_1_retrieved : bloom_response_scenario_2_retrieved),
+               names_to = "purpose_order",
+               values_to = "response") %>% 
+  mutate(purpose_order = ifelse(purpose_order == "bloom_response_scenario_1_retrieved", "purpose_second",
+                                "purpose_first")) %>% 
+  filter(response != "unsure") %>% 
+  mutate(response = case_when(item_original == "lightning" & response %in% c("lightning") ~
+                                "original_thing",
+                              item_original == "lightning" & response %in% c("cloud", "sun", "soil") ~
+                                "new_thing",
+                              item_original == "cloud" & response %in% c("cloud") ~
+                                "original_thing",
+                              item_original == "cloud" & response %in% c("lightning", "sun", "soil") ~
+                                "new_thing",
+                              item_original == "sun" & response %in% c("sun") ~
+                                "original_thing",
+                              item_original == "sun" & response %in% c("cloud", "lightning", "soil") ~
+                                "new_thing",
+                              item_original == "soil" & response %in% c("soil") ~
+                                "original_thing",
+                              item_original == "soil" & response %in% c("cloud", "sun", "lightning") ~
+                                "new_thing"),
+         response = ifelse(str_detect(response, "new_thing"), 1, 0)) %>% 
+  mutate(kind = rep("Non-living natural kind"))
+
+```
+
+
+#### Living natural kinds
+
+```{r}
+df.exp1.bloom.living_natural_kinds = read_csv(paste0(data_dir, 'experiment1/experiment1_bloom_answer_retrieved/experiment1_bloom_living_natural_kinds_answer_retrieved.csv'),
+                                              show_col_types = F) %>%
+   select(c(-(category : items), -whose_appearance, -whose_telo, -(scenario_1 : bloom_response_scenario_1), -bloom_response_scenario_2)) %>% 
+  pivot_longer(cols = c(bloom_response_scenario_1_retrieved : bloom_response_scenario_2_retrieved),
+               names_to = "purpose_order",
+               values_to = "response") %>% 
+  mutate(purpose_order = ifelse(purpose_order == "bloom_response_scenario_1_retrieved", "purpose_second",
+                                "purpose_first")) %>% 
+  filter(response != "unsure") %>% 
+  mutate(response = case_when(item_original == "chicken" & response %in% c("chicken") ~
+                                "original_thing",
+                              item_original == "chicken" & response %in% c("cow", "worm", "bat") ~
+                                "new_thing",
+                              item_original == "cow" & response %in% c("cow") ~
+                                "original_thing",
+                              item_original == "cow" & response %in% c("chicken", "worm", "bat") ~
+                                "new_thing",
+                              item_original == "worm" & response %in% c("worm") ~
+                                "original_thing",
+                              item_original == "worm" & response %in% c("chicken", "cow", "bat") ~
+                                "new_thing",
+                              item_original == "bat" & response %in% c("bat") ~
+                                "original_thing",
+                              item_original == "bat" & response %in% c("chicken", "cow", "worm") ~
+                                "new_thing"),
+         response = ifelse(str_detect(response, "new_thing"), 1, 0))  %>% 
+  mutate(kind = rep("Living natural kind"))
+
+```
+
+
+#### Artifacts
+
+```{r}
+df.exp1.bloom.artifacts = read_csv(paste0(data_dir, 'experiment1/experiment1_bloom_answer_retrieved/experiment1_bloom_artifacts_answer_retrieved.csv'),
+                                              show_col_types = F) %>%
+  select(c(-(category : items), -whose_appearance, -whose_telo, -(scenario_1 : bloom_response_scenario_1), -bloom_response_scenario_2)) %>% 
+  pivot_longer(cols = c(bloom_response_scenario_1_retrieved : bloom_response_scenario_2_retrieved),
+               names_to = "purpose_order",
+               values_to = "response") %>% 
+  mutate(purpose_order = ifelse(purpose_order == "bloom_response_scenario_1_retrieved", "purpose_second",
+                                "purpose_first")) %>% 
+  filter(response != "unsure") %>% 
+  mutate(response = case_when(item_original == "bed" & response %in% c("bed") ~
+                                "original_thing",
+                              item_original == "bed" & response %in% c("microwave", "lotion", "keychain") ~
+                                "new_thing",
+                              item_original == "microwave" & response %in% c("microwave") ~
+                                "original_thing",
+                              item_original == "microwave" & response %in% c("bed", "lotion", "keychain") ~
+                                "new_thing",
+                              item_original == "lotion" & response %in% c("lotion") ~
+                                "original_thing",
+                              item_original == "lotion" & response %in% c("bed", "microwave", "keychain") ~
+                                "new_thing",
+                              item_original == "keychain" & response %in% c("keychain") ~
+                                "original_thing",
+                              item_original == "keychain" & response %in% c("bed", "microwave", "lotion") ~
+                                "new_thing"),
+         response = ifelse(str_detect(response, "new_thing"), 1, 0)) %>% 
+  mutate(kind = rep("Artifact"))
+```
+
+
+#### BLOOM Aggregated
+
+```{r}
+df.exp1.bloom.aggregated = df.exp1.bloom.non_living_natural_kinds %>%
+  bind_rows(df.exp1.bloom.living_natural_kinds, df.exp1.bloom.artifacts)
+```
+
+
+## Plots
+### Helper functions 
+#### Appearance by telos condition across domains
+
+```{r}
+
+plot_appearance_by_telos = function(data, title, save = T) {
+  
+  p = ggplot(data = data,
+             mapping = aes(x = appearance,
+                           y = response,
+                           group = Telos,
+                           color = Telos,
+                           fill = Telos)) + 
+    geom_point(position = position_jitterdodge(dodge.width = 0.8,
+                                               jitter.width = 0.5,
+                                               jitter.height = 0.0),
+               alpha = 0.1) + 
+    stat_summary(fun.data = "mean_cl_boot",
+                 position = position_dodge(width = 0.5),
+                 shape = 21,
+                 color = "black",
+                 size = 1) + 
+    theme(plot.title = element_text(hjust = 0.5), 
+          legend.position = "bottom",
+          text = element_text(size = 18),
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          plot.margin = margin(0.5, 1, 0.5, 0.5, "cm")) +
+    geom_hline(yintercept = .5, linetype="dashed",
+               color = "black", size=0.5) +
+    scale_fill_manual(values = c('#2297E6', 'red')) +
+    scale_color_manual(values = c('#2297E6', 'red')) +
+    scale_y_continuous(labels = scales::percent) +
+    labs(x = "Appearance") +
+    labs(y = "Probability saying\n that it is a new thing") +
+    facet_wrap(~kind)
+  
+  print(p)
+  
+  
+  if (save) {
+    ggsave(paste0(figures_dir, 'experiment1/', title, '.pdf'),
+           width = 9, height = 5)
+  }
+}
+
+```
+
+#### Appearance by telos condition by purpose order
+
+```{r}
+
+plot_purpose_order = function(data, title, save = T) {
+  
+  p = ggplot(data = data,
+             mapping = aes(x = appearance,
+                     y = response,
+                     group = Telos,
+                     color = Telos,
+                     fill = Telos,
+                     )) + 
+    geom_point(position = position_jitterdodge(dodge.width = 0.8,
+                                             jitter.width = 0.5,
+                                             jitter.height = 0.0),
+             alpha = 0.1) + 
+   stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.5),
+               shape = 21,
+               color = "black",
+               size = 1) + 
+    theme(plot.title = element_text(hjust = 0.5), 
+          legend.position = "bottom",
+          text = element_text(size = 18),
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.title.y = element_text(size=14),
+          plot.margin = margin(0.5, 1, 0.5, 0.5, "cm")) +
+    geom_hline(yintercept = .5, linetype="dashed",
+    color = "black", size=0.5) +
+    # ggtitle("Experiment 1 GPT-3 Appearance by Telos by Purpose Order") +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    scale_fill_manual(values = c('#2297E6', 'red')) +
+    scale_color_manual(values = c('#2297E6', 'red')) +
+    scale_y_continuous(labels = scales::percent) +
+    labs(x = "Appearance") +
+    labs(y = "Probability saying\n that it is a new thing") +
+    facet_wrap(~purpose_order)
+  
+  print(p)
+
+  if (save) {
+    ggsave(paste0(figures_dir, 'experiment1/', title, '.pdf'),
+           width = 9, height = 4)
+  }
+}
+
+```
+
+
+### GPT-3 plots
+
+```{r}
+# Setting up data for plotting
+exp1.gpt3.appearance_by_telos.plot = df.exp1.gpt3.aggregated %>% 
+  mutate(appearance_type = factor(appearance_type, 
+                                  levels = c("original", "new"))) %>%
+  mutate(kind = factor(kind, 
+                       levels = c("Artifact", "Living natural kind", "Non-living natural kind"))) %>%
+  mutate(telo_condition = factor(telo_condition, 
+                                 levels = c("preserved", "changed"))) %>%
+  rename("Telos" = "telo_condition", 
+         "appearance" = "appearance_type") %>%
+  mutate(across('purpose_order', 
+                str_replace, 'purpose_first', 'Purpose first')) %>%
+  mutate(across('purpose_order', 
+                str_replace, 'purpose_second', 'Purpose second'))
+```
+
+```{r}
+
+plot_appearance_by_telos(exp1.gpt3.appearance_by_telos.plot, 
+                'experiment1_gpt3_appearance_by_telos',
+                save = F)
+
+```
+
+```{r}
+
+plot_purpose_order(exp1.gpt3.appearance_by_telos.plot, 
+                'experiment1_gpt3_appearance_by_telos_by_telos_order',
+                save = F)
+```
+
+### BLOOM plots
+
+```{r}
+
+# Setting up data for plotting
+exp1.bloom.appearance_by_telos.plot = df.exp1.bloom.aggregated %>% 
+  mutate(appearance_type = factor(appearance_type, 
+                                  levels = c("original", "new"))) %>%
+  mutate(kind = factor(kind, 
+                       levels = c("Artifact", "Living natural kind", "Non-living natural kind"))) %>%
+  mutate(telo_condition = factor(telo_condition, 
+                                 levels = c("preserved", "changed"))) %>%
+  rename("Telos" = "telo_condition", 
+         "appearance" = "appearance_type") %>%
+  mutate(across('purpose_order', 
+                str_replace, 'purpose_first', 'Purpose first')) %>%
+  mutate(across('purpose_order', 
+                str_replace, 'purpose_second', 'Purpose second'))
+
+```
+
+```{r}
+
+plot_appearance_by_telos(exp1.bloom.appearance_by_telos.plot, 
+                'experiment1_bloom_appearance_by_telos',
+                save = F)
+
+```
+
+
+```{r}
+
+plot_purpose_order(exp1.bloom.appearance_by_telos.plot, 
+                'experiment1_bloom_appearance_by_telos_by_telos_order',
+                save = F)
+```
+
+
+## Bayesian Linear Mixed Model
+### GPT-3
+```{r}
+
+df.exp1.gpt3.aggregated = df.exp1.gpt3.aggregated %>% 
+  mutate(item_pair = str_c(item_original, "_", item_new))
+
+fit.brm1 = brm(formula = response ~ 1 + appearance_type*telo_condition*kind + (1 | item_pair),
+     data = df.exp1.gpt3.aggregated,
+     seed = 1,
+     cores = 4,
+     file = "cache/brm1") 
+
+fit.brm1
+
+```
+
+#### Hypothesis 1
+
+```{r}
+fit.brm1 %>% 
+  emmeans(pairwise ~ telo_condition)
+```
+
+#### Hypothesis 2
+
+```{r}
+fit.brm1 %>% 
+  emmeans(pairwise ~ appearance_type)
+```
+
+#### Hypothesis 3
+```{r}
+tmp.telos = fit.brm1 %>% 
+  emmeans(pairwise ~ telo_condition) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, .draw, .value)
+
+tmp.appearance = fit.brm1 %>% 
+  emmeans(pairwise ~ appearance_type) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, .draw, .value)
+
+tmp.combined = tmp.telos %>% 
+  select(telos = .value, .draw, -contrast) %>% 
+  left_join(tmp.appearance %>% 
+              select(appearance = .value, .draw, -contrast),
+            by = ".draw") %>% 
+  mutate(difference = telos - appearance)
+
+tmp.combined %>% 
+  summarise(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
+  mutate(index = c("low", "median", "high"))
+```
+
+#### Hypothesis 4 
+```{r}
+fit.brm1 %>% 
+  emmeans(pairwise ~ telo_condition | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  pivot_wider(names_from = kind,
+              values_from = .value) %>% 
+  mutate(artifacts_living = artifacts - living,
+         artifacts_non_living = artifacts - non_living,
+         living_non_living = living - non_living) %>% 
+  summarise(artifacts_living = quantile(artifacts_living, c(0.025, 0.5, 0.975)),
+            artifacts_non_living = quantile(artifacts_non_living, c(0.025, 0.5, 0.975)),
+            living_non_living = quantile(living_non_living, c(0.025, 0.5, 0.975))) %>% 
+  mutate(index = c("low", "median", "high")) 
+```
+
+
+#### Effect of Telos and Appearance across domains
+
+```{r}
+tmp.telos = fit.brm1 %>% 
+  emmeans(pairwise ~ telo_condition | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, kind, .draw, .value)
+
+tmp.appearance = fit.brm1 %>% 
+  emmeans(pairwise ~ appearance_type  | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, kind, .draw, .value)
+
+tmp.combined = tmp.telos %>% 
+  select(kind, telos = .value, .draw, -contrast) %>% 
+  left_join(tmp.appearance %>% 
+              select(kind, appearance = .value, .draw, -contrast),
+            by = c(".draw", "kind")) %>% 
+  mutate(difference = telos - appearance)
+
+tmp.combined %>% 
+  group_by(kind) %>% 
+  summarize(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
+  mutate(index = c("low", "median", "high")) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = index,
+              values_from = posterior)
+
+```
+
+### BLOOM Bayesian Models
+
+```{r}
+
+df.exp1.bloom.aggregated = df.exp1.bloom.aggregated %>% 
+  mutate(item_pair = str_c(item_original, "_", item_new),
+         kind = str_replace_all(kind, "Artifact", "artifacts"),
+         kind = str_replace_all(kind, "Non-living natural kind", "non_living"),
+         kind = str_replace_all(kind, "Living natural kind", "living"))
+
+fit.brm1.bloom = brm(formula = response ~ 1 + appearance_type*telo_condition*kind + (1 | item_pair),
+     data = df.exp1.bloom.aggregated,
+     seed = 1,
+     cores = 4,
+     file = "cache/brm1_bloom") 
+
+fit.brm1.bloom
+
+```
+
+
+#### Hypothesis 1
+
+```{r}
+fit.brm1.bloom %>% 
+  emmeans(pairwise ~ telo_condition)
+```
+#### Hypothesis 2
+
+```{r}
+fit.brm1.bloom %>% 
+  emmeans(pairwise ~ appearance_type)
+```
+
+#### Hypothesis 3
+
+```{r}
+tmp.telos = fit.brm1.bloom %>% 
+  emmeans(pairwise ~ telo_condition) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, .draw, .value)
+
+tmp.appearance = fit.brm1.bloom %>% 
+  emmeans(pairwise ~ appearance_type) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, .draw, .value)
+
+tmp.combined = tmp.telos %>% 
+  select(telos = .value, .draw, -contrast) %>% 
+  left_join(tmp.appearance %>% 
+              select(appearance = .value, .draw, -contrast),
+            by = ".draw") %>% 
+  mutate(difference = telos - appearance)
+
+tmp.combined %>% 
+  summarise(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
+  mutate(index = c("low", "median", "high"))
+```
+
+
+#### Hypothesis 4 
+```{r}
+fit.brm1.bloom %>% 
+  emmeans(pairwise ~ telo_condition | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  pivot_wider(names_from = kind,
+              values_from = .value) %>% 
+  mutate(artifacts_living = artifacts - living,
+         artifacts_non_living = artifacts - non_living,
+         living_non_living = living - non_living) %>% 
+  summarise(artifacts_living = quantile(artifacts_living, c(0.025, 0.5, 0.975)),
+            artifacts_non_living = quantile(artifacts_non_living, c(0.025, 0.5, 0.975)),
+            living_non_living = quantile(living_non_living, c(0.025, 0.5, 0.975))) %>% 
+  mutate(index = c("low", "median", "high")) 
+```
+
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
+# EXPERIMENT 2 Insides vs Appearance
+## Data
+### GPT-3
+#### Non living natural kinds
+
+```{r}
+df.exp2.gpt3.non_living_natural_kinds = read_csv(paste0(data_dir, 'experiment2/experiment2_gpt3_answer_retrieved/experiment2_gpt3_non_living_natural_kinds_answer_retrieved.csv'),
+                                              # Hiding the column types to make the output cleaner
+                                              show_col_types = F) %>% 
+  # Selecting specific columns to keep
+  select(c(-(category : items), -whose_appearance, -whose_comp, -(scenario_1 : gpt3_response_scenario_1), -gpt3_response_scenario_2)) %>% 
+  # Converting the data set from wide to long format
+   pivot_longer(cols = c(gpt3_response_scenario_1_retrieved : gpt3_response_scenario_2_retrieved),
+               names_to = "made_of_order",
+               values_to = "response") %>% 
+   rename(made_of_condition = comp_condition) %>%
+  #  # Renaming the values in the "made_of_order" column
+  # "made_of_first" means the made of sentence appears before the appearance sentence
+  # "made_of_second" means the appearance sentence appears before the made of sentence
+  mutate(made_of_order = ifelse(made_of_order == "gpt3_response_scenario_1_retrieved", "made_of_second",
+                                "made_of_first")) %>% 
+  filter(response != "unsure") %>% 
+  # Categorizing responses as either "original thing" or "new thing"
+  mutate(response = case_when(item_original == "lightning" & response %in% c("lightning") ~
+                                "original_thing",
+                              item_original == "lightning" & response %in% c("cloud", "sun", "soil") ~
+                                "new_thing",
+                              item_original == "cloud" & response %in% c("cloud") ~
+                                "original_thing",
+                              item_original == "cloud" & response %in% c("lightning", "sun", "soil") ~
+                                "new_thing",
+                              item_original == "sun" & response %in% c("sun") ~
+                                "original_thing",
+                              item_original == "sun" & response %in% c("cloud", "lightning", "soil") ~
+                                "new_thing",
+                              item_original == "soil" & response %in% c("soil") ~
+                                "original_thing",
+                              item_original == "soil" & response %in% c("cloud", "sun", "lightning") ~
+                                "new_thing"),
+         # Converting the "response" column to a binary column
+         response = ifelse(str_detect(response, "new_thing"), 1, 0)) %>% 
+  mutate(kind = rep("Non-living natural kind"))
+```
+
+
+#### Living natural kinds
+
+
+```{r}
+
+df.exp2.gpt3.living_natural_kinds = read_csv(paste0(data_dir, 'experiment2/experiment2_gpt3_answer_retrieved/experiment2_gpt3_living_natural_kinds_answer_retrieved.csv'),
+                                              show_col_types = F) %>% 
+  # Selecting specific columns to keep
+  select(c(-(category : items), -whose_appearance, -whose_comp, -(scenario_1 : gpt3_response_scenario_1), -gpt3_response_scenario_2)) %>% 
+  # Converting the data set from wide to long format
+   pivot_longer(cols = c(gpt3_response_scenario_1_retrieved : gpt3_response_scenario_2_retrieved),
+               names_to = "made_of_order",
+               values_to = "response") %>% 
+   rename(made_of_condition = comp_condition) %>%
+ # Renaming the values in the "made_of_order" column
+  # "made_of_first" means the made of sentence appears before the appearance sentence
+  # "made_of_second" means the appearance sentence appears before the made of sentence
+  mutate(made_of_order = ifelse(made_of_order == "gpt3_response_scenario_1_retrieved", "made_of_second",
+                                "made_of_first")) %>% 
+  filter(response != "unsure") %>% 
+  # Categorizing responses as either "original thing" or "new thing"
+  mutate(response = case_when(item_original == "chicken" & response %in% c("chicken") ~
+                                "original_thing",
+                              item_original == "chicken" & response %in% c("cow", "worm", "bat") ~
+                                "new_thing",
+                              item_original == "cow" & response %in% c("cow") ~
+                                "original_thing",
+                              item_original == "cow" & response %in% c("chicken", "worm", "bat") ~
+                                "new_thing",
+                              item_original == "worm" & response %in% c("worm") ~
+                                "original_thing",
+                              item_original == "worm" & response %in% c("chicken", "cow", "bat") ~
+                                "new_thing",
+                              item_original == "bat" & response %in% c("bat") ~
+                                "original_thing",
+                              item_original == "bat" & response %in% c("chicken", "cow", "worm") ~
+                                "new_thing"),
+         response = ifelse(str_detect(response, "new_thing"), 1, 0)) %>%
+  mutate(kind = rep("Living natural kind"))
+  
+```
+
+
+#### Artifacts
+
+```{r}
+df.exp2.gpt3.artifacts = read_csv(paste0(data_dir, 'experiment2/experiment2_gpt3_answer_retrieved/experiment2_gpt3_artifacts_answer_retrieved.csv'),
+                                              show_col_types = F) %>%
+  select(c(-(category : items), -whose_appearance, -whose_comp, -(scenario_1 : gpt3_response_scenario_1), -gpt3_response_scenario_2)) %>% 
+   pivot_longer(cols = c(gpt3_response_scenario_1_retrieved : gpt3_response_scenario_2_retrieved),
+               names_to = "made_of_order",
+               values_to = "response") %>% 
+   rename(made_of_condition = comp_condition) %>%
+  mutate(made_of_order = ifelse(made_of_order == "gpt3_response_scenario_1_retrieved", "made_of_second",
+                                "made_of_first")) %>% 
+  filter(response != "unsure") %>% 
+  mutate(response = case_when(item_original == "bed" & response %in% c("bed") ~
+                                "original_thing",
+                              item_original == "bed" & response %in% c("microwave", "lotion", "keychain") ~
+                                "new_thing",
+                              item_original == "microwave" & response %in% c("microwave") ~
+                                "original_thing",
+                              item_original == "microwave" & response %in% c("bed", "lotion", "keychain") ~
+                                "new_thing",
+                              item_original == "lotion" & response %in% c("lotion") ~
+                                "original_thing",
+                              item_original == "lotion" & response %in% c("bed", "microwave", "keychain") ~
+                                "new_thing",
+                              item_original == "keychain" & response %in% c("keychain") ~
+                                "original_thing",
+                              item_original == "keychain" & response %in% c("bed", "microwave", "lotion") ~
+                                "new_thing"),
+         response = ifelse(str_detect(response, "new_thing"), 1, 0)) %>%
+  mutate(kind = rep("Artifact"))
+
+```
+
+
+#### GPT-3 Aggregated
+```{r}
+df.exp2.gpt3.aggregated = df.exp2.gpt3.non_living_natural_kinds %>%
+  bind_rows(df.exp2.gpt3.living_natural_kinds, df.exp2.gpt3.artifacts)
+```
+
+
+
+
+### BLOOM
+#### Non living natural kinds
+
+```{r}
+df.exp2.bloom.non_living_natural_kinds = read_csv(paste0(data_dir, 'experiment2/experiment2_bloom_answer_retrieved/experiment2_bloom_non_living_natural_kinds_answer_retrieved.csv'),
+                                              # Hiding the column types to make the output cleaner
+                                              show_col_types = F) %>% 
+  # Selecting specific columns to keep
+  select(c(-(category : items), -whose_appearance, -whose_comp, -(scenario_1 : bloom_response_scenario_1), -bloom_response_scenario_2)) %>% 
+  # Converting the data set from wide to long format
+   pivot_longer(cols = c(bloom_response_scenario_1_retrieved : bloom_response_scenario_2_retrieved),
+               names_to = "made_of_order",
+               values_to = "response") %>% 
+   rename(made_of_condition = comp_condition) %>%
+  # Renaming the values in the "made_of_order" column
+  # "made_of_first" means the made of sentence appears before the appearance sentence
+  # "made_of_second" means the appearance sentence appears before the made of sentence
+  mutate(made_of_order = ifelse(made_of_order == "gpt3_response_scenario_1_retrieved", "made_of_second",
+                                "made_of_first")) %>% 
+  filter(response != "unsure") %>% 
+  # Categorizing responses as either "original thing" or "new thing"
+  mutate(response = case_when(item_original == "lightning" & response %in% c("lightning") ~
+                                "original_thing",
+                              item_original == "lightning" & response %in% c("cloud", "sun", "soil") ~
+                                "new_thing",
+                              item_original == "cloud" & response %in% c("cloud") ~
+                                "original_thing",
+                              item_original == "cloud" & response %in% c("lightning", "sun", "soil") ~
+                                "new_thing",
+                              item_original == "sun" & response %in% c("sun") ~
+                                "original_thing",
+                              item_original == "sun" & response %in% c("cloud", "lightning", "soil") ~
+                                "new_thing",
+                              item_original == "soil" & response %in% c("soil") ~
+                                "original_thing",
+                              item_original == "soil" & response %in% c("cloud", "sun", "lightning") ~
+                                "new_thing"),
+         # Converting the "response" column to a binary column
+         response = ifelse(str_detect(response, "new_thing"), 1, 0)) %>% 
+  mutate(kind = rep("Non-living natural kind"))
+```
+
+
+
+#### Living natural kinds
+
+```{r}
+df.exp2.bloom.living_natural_kinds = read_csv(paste0(data_dir, 'experiment2/experiment2_bloom_answer_retrieved/experiment2_bloom_living_natural_kinds_answer_retrieved.csv'),
+                                              show_col_types = F) %>%
+    select(c(-(category : items), -whose_appearance, -whose_comp, -(scenario_1 : bloom_response_scenario_1), -bloom_response_scenario_2)) %>% 
+  # Converting the data set from wide to long format
+   pivot_longer(cols = c(bloom_response_scenario_1_retrieved : bloom_response_scenario_2_retrieved),
+               names_to = "made_of_order",
+               values_to = "response") %>% 
+   rename(made_of_condition = comp_condition) %>%
+  mutate(made_of_order = ifelse(made_of_order == "gpt3_response_scenario_1_retrieved", "made_of_second",
+                                "made_of_first")) %>% 
+  filter(response != "unsure") %>% 
+  mutate(response = case_when(item_original == "chicken" & response %in% c("chicken") ~
+                                "original_thing",
+                              item_original == "chicken" & response %in% c("cow", "worm", "bat") ~
+                                "new_thing",
+                              item_original == "cow" & response %in% c("cow") ~
+                                "original_thing",
+                              item_original == "cow" & response %in% c("chicken", "worm", "bat") ~
+                                "new_thing",
+                              item_original == "worm" & response %in% c("worm") ~
+                                "original_thing",
+                              item_original == "worm" & response %in% c("chicken", "cow", "bat") ~
+                                "new_thing",
+                              item_original == "bat" & response %in% c("bat") ~
+                                "original_thing",
+                              item_original == "bat" & response %in% c("chicken", "cow", "worm") ~
+                                "new_thing"),
+         response = ifelse(str_detect(response, "new_thing"), 1, 0))  %>% 
+  mutate(kind = rep("Living natural kind"))
+
+```
+
+
+#### Artifacts
+
+```{r}
+df.exp2.bloom.artifacts = read_csv(paste0(data_dir, 'experiment2/experiment2_bloom_answer_retrieved/experiment2_bloom_artifacts_answer_retrieved.csv'),
+                                              show_col_types = F) %>%
+    select(c(-(category : items), -whose_appearance, -whose_comp, -(scenario_1 : bloom_response_scenario_1), -bloom_response_scenario_2)) %>% 
+  pivot_longer(cols = c(bloom_response_scenario_1_retrieved : bloom_response_scenario_2_retrieved),
+               names_to = "made_of_order",
+               values_to = "response") %>% 
+  rename(made_of_condition = comp_condition) %>%
+  mutate(made_of_order = ifelse(made_of_order == "bloom_response_scenario_1_retrieved", "made_of_second",
+                                "made_of_first")) %>% 
+  filter(response != "unsure") %>% 
+  mutate(response = case_when(item_original == "bed" & response %in% c("bed") ~
+                                "original_thing",
+                              item_original == "bed" & response %in% c("microwave", "lotion", "keychain") ~
+                                "new_thing",
+                              item_original == "microwave" & response %in% c("microwave") ~
+                                "original_thing",
+                              item_original == "microwave" & response %in% c("bed", "lotion", "keychain") ~
+                                "new_thing",
+                              item_original == "lotion" & response %in% c("lotion") ~
+                                "original_thing",
+                              item_original == "lotion" & response %in% c("bed", "microwave", "keychain") ~
+                                "new_thing",
+                              item_original == "keychain" & response %in% c("keychain") ~
+                                "original_thing",
+                              item_original == "keychain" & response %in% c("bed", "microwave", "lotion") ~
+                                "new_thing"),
+         response = ifelse(str_detect(response, "new_thing"), 1, 0)) %>%
+  mutate(kind = rep("Artifact"))
+
+```
+
+
+#### BLOOM Aggregated
+
+```{r}
+df.exp2.bloom.aggregated = df.exp2.bloom.non_living_natural_kinds %>%
+  bind_rows(df.exp2.bloom.living_natural_kinds, df.exp2.bloom.artifacts)
+```
+
+
+## Plots
+### Helper functions 
+#### Appearance by made of condition across domains
+
+```{r}
+
+plot_appearance_by_made_of = function(data, title, save = T) {
+  
+  p = ggplot(data = data,
+              mapping = aes(x = appearance,
+                     y = response,
+                     group = `Made of`,
+                     color = `Made of`,
+                     fill = `Made of`,
+                     )) +  
+    geom_point(position = position_jitterdodge(dodge.width = 0.8,
+                                               jitter.width = 0.5,
+                                               jitter.height = 0.0),
+               alpha = 0.1) + 
+    stat_summary(fun.data = "mean_cl_boot",
+                 position = position_dodge(width = 0.5),
+                 shape = 21,
+                 color = "black",
+                 size = 1) + 
+    theme(plot.title = element_text(hjust = 0.5), 
+          legend.position = "bottom",
+          text = element_text(size = 18),
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          plot.margin = margin(0.5, 1, 0.5, 0.5, "cm")) +
+    geom_hline(yintercept = .5, linetype="dashed",
+               color = "black", size=0.5) +
+   scale_fill_manual(values = c('sienna2', 'seagreen')) +
+  scale_color_manual(values = c('sienna2', 'seagreen')) +
+    scale_y_continuous(labels = scales::percent) +
+    labs(x = "Appearance") +
+    labs(y = "Probability saying\n that it is a new thing") +
+    facet_wrap(~kind)
+  
+  print(p)
+  
+  
+  if (save) {
+    ggsave(paste0(figures_dir, 'experiment2/', title, '.pdf'),
+           width = 9, height = 5)
+  }
+}
+
+```
+
+
+#### Appearance by made of condition by made of order
+
+```{r}
+
+plot_made_of_order = function(data, title, save = T) {
+  
+  p = ggplot(data = data,
+           mapping = aes(x = appearance,
+                     y = response,
+                     group = `Made of`,
+                     color = `Made of`,
+                     fill = `Made of`,
+                     )) + 
+    geom_point(position = position_jitterdodge(dodge.width = 0.8,
+                                             jitter.width = 0.5,
+                                             jitter.height = 0.0),
+             alpha = 0.1) + 
+   stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.5),
+               shape = 21,
+               color = "black",
+               size = 1) + 
+    theme(plot.title = element_text(hjust = 0.5), 
+          legend.position = "bottom",
+          text = element_text(size = 18),
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.title.y = element_text(size=14),
+          plot.margin = margin(0.5, 1, 0.5, 0.5, "cm")) +
+    geom_hline(yintercept = .5, linetype="dashed",
+    color = "black", size=0.5) +
+    # ggtitle("Experiment 1 GPT-3 Appearance by Telos by Purpose Order") +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    scale_fill_manual(values = c('sienna2', 'seagreen')) +
+  scale_color_manual(values = c('sienna2', 'seagreen')) +
+    scale_y_continuous(labels = scales::percent) +
+    labs(x = "Appearance") +
+    labs(y = "Probability saying\n that it is a new thing") +
+     facet_wrap(~made_of_order)
+  print(p)
+
+  if (save) {
+    ggsave(paste0(figures_dir, 'experiment2/', title, '.pdf'),
+           width = 9, height = 4)
+  }
+}
+
+```
+
+
+### GPT-3 plots
+
+```{r}
+# Setting up data for plotting
+plot.gpt3.appearance_by_made_of.plot= df.exp2.gpt3.aggregated %>% 
+   mutate(appearance_type = factor(appearance_type, levels = c("original", "new"))) %>%
+  mutate(kind = factor(kind, levels = c("Artifact", "Living natural kind", "Non-living natural kind"))) %>%
+  mutate(made_of_condition = factor(made_of_condition, levels = c("preserved", "changed"))) %>%
+  rename("Made of" = "made_of_condition","appearance" = "appearance_type") %>%
+  mutate(across('made_of_order', str_replace, 'made_of_first', 'Made of first')) %>%
+  mutate(across('made_of_order', str_replace, 'made_of_second', 'Made of second'))
+
+```
+
+```{r}
+
+plot_appearance_by_made_of(plot.gpt3.appearance_by_made_of.plot, 
+                'experiment2_gpt3_appearance_by_made_of',
+                save = F)
+
+```
+
+
+```{r}
+
+plot_made_of_order(plot.gpt3.appearance_by_made_of.plot, 
+                'experiment2_gpt3_appearance_by_made_of_by_made_of_order',
+                save = F)
+
+```
+
+
+
+### BLOOM plots
+```{r}
+# Setting up data for plotting
+plot.exp2.bloom.appearance_by_made_of.plot = df.exp2.bloom.aggregated %>% 
+   mutate(appearance_type = factor(appearance_type, levels = c("original", "new"))) %>%
+  mutate(kind = factor(kind, levels = c("Non-living natural kind", "Living natural kind", "Artifact"))) %>%
+  mutate(made_of_condition = factor(made_of_condition, levels = c("preserved", "changed"))) %>%
+  rename("Made of" = "made_of_condition","appearance" = "appearance_type") %>%
+  mutate(across('made_of_order', str_replace, 'made_of_first', 'Made of first')) %>%
+  mutate(across('made_of_order', str_replace, 'made_of_second', 'Made of second'))
+``` 
+
+
+```{r}
+
+plot_appearance_by_made_of(plot.exp2.bloom.appearance_by_made_of.plot, 
+                'experiment2_bloom_appearance_by_made_of',
+                save = F)
+
+```
+
+
+```{r}
+
+plot_made_of_order(plot.exp2.bloom.appearance_by_made_of.plot, 
+                'experiment2_bloom_appearance_by_made_of_by_made_of_order',
+                save = F)
+
+```
+
+
+
+## Bayesian Linear Mixed Model
+
+### GPT3 
+
+```{r}
+
+df.exp2.gpt3.aggregated = df.exp2.gpt3.aggregated %>% 
+  mutate(item_pair = str_c(item_original, "_", item_new))
+
+fit.brm2 = brm(formula = response ~ 1 + appearance_type*made_of_condition*kind + (1 | item_pair),
+     data = df.exp2.gpt3.aggregated,
+     seed = 1,
+     # iter = 4000,
+     # control = list(adapt_delta = 0.9999),
+     cores = 4,
+     file = "cache/brm2") 
+
+fit.brm2
+
+```
+
+
+#### Hypothesis 1
+
+```{r}
+
+fit.brm2 %>% 
+  emmeans(pairwise ~ made_of_condition)
+
+```
+
+
+#### Hypothesis 2
+
+```{r}
+
+fit.brm2 %>% 
+  emmeans(pairwise ~ appearance_type)
+
+```
+
+
+#### Hypothesis 3
+
+```{r}
+tmp.made = fit.brm2 %>% 
+  emmeans(pairwise ~ made_of_condition) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, .draw, .value)
+
+tmp.appearance = fit.brm2 %>% 
+  emmeans(pairwise ~ appearance_type) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, .draw, .value)
+
+tmp.combined = tmp.made %>% 
+  select(made = .value, .draw, -contrast) %>% 
+  left_join(tmp.appearance %>% 
+              select(appearance = .value, .draw, -contrast),
+            by = ".draw") %>% 
+  mutate(difference = made - appearance)
+
+tmp.combined %>% 
+  summarise(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
+  mutate(index = c("low", "median", "high"))
+```
+
+
+#### Hypothesis 4 
+
+```{r}
+fit.brm2 %>% 
+  emmeans(pairwise ~ made_of_condition | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  pivot_wider(names_from = kind,
+              values_from = .value) %>% 
+  mutate(artifacts_living = artifacts - living,
+         artifacts_non_living = artifacts - non_living,
+         living_non_living = living - non_living) %>% 
+  summarise(artifacts_living = quantile(artifacts_living, c(0.025, 0.5, 0.975)),
+            artifacts_non_living = quantile(artifacts_non_living, c(0.025, 0.5, 0.975)),
+            living_non_living = quantile(living_non_living, c(0.025, 0.5, 0.975))) %>% 
+  mutate(index = c("low", "median", "high")) 
+```
+
+
+#### Effect of Made of and Appearance Across Domains
+
+```{r}
+tmp.made = fit.brm2 %>% 
+  emmeans(pairwise ~ made_of_condition | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, kind, .draw, .value)
+
+tmp.appearance = fit.brm2 %>% 
+  emmeans(pairwise ~ appearance_type  | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, kind, .draw, .value)
+
+tmp.combined = tmp.made %>% 
+  select(kind, made = .value, .draw, -contrast) %>% 
+  left_join(tmp.appearance %>% 
+              select(kind, appearance = .value, .draw, -contrast),
+            by = c(".draw", "kind")) %>% 
+  mutate(difference = made - appearance)
+
+tmp.combined %>% 
+  group_by(kind) %>% 
+  summarize(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
+  mutate(index = c("low", "median", "high")) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = index,
+              values_from = posterior)
+
+
+```
+
+### BLOOM 
+
+```{r}
+
+df.exp2.bloom.aggregated = df.exp2.bloom.aggregated %>% 
+   mutate(item_pair = str_c(item_original, "_", item_new),
+         kind = str_replace_all(kind, "Artifact", "artifacts"),
+         kind = str_replace_all(kind, "Non-living natural kind", "non_living"),
+         kind = str_replace_all(kind, "Living natural kind", "living"))
+
+fit.brm2.bloom = brm(formula = response ~ 1 + appearance_type*made_of_condition*kind + (1 | item_pair),
+     data = df.exp2.bloom.aggregated,
+     seed = 1,
+     # iter = 4000,
+     # control = list(adapt_delta = 0.9999),
+     cores = 4,
+     file = "cache/brm2_bloom") 
+
+fit.brm2.bloom
+
+```
+
+
+#### Hypothesis 1
+
+```{r}
+
+fit.brm2.bloom %>% 
+  emmeans(pairwise ~ made_of_condition)
+
+```
+
+#### Hypothesis 2
+
+```{r}
+
+fit.brm2.bloom %>% 
+  emmeans(pairwise ~ appearance_type)
+
+```
+
+
+#### Hypothesis 3
+
+```{r}
+tmp.made = fit.brm2.bloom %>% 
+  emmeans(pairwise ~ made_of_condition) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, .draw, .value)
+
+tmp.appearance = fit.brm2.bloom %>% 
+  emmeans(pairwise ~ appearance_type) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, .draw, .value)
+
+tmp.combined = tmp.made %>% 
+  select(made = .value, .draw, -contrast) %>% 
+  left_join(tmp.appearance %>% 
+              select(appearance = .value, .draw, -contrast),
+            by = ".draw") %>% 
+  mutate(difference = made - appearance)
+
+tmp.combined %>% 
+  summarise(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
+  mutate(index = c("low", "median", "high"))
+```
+
+
+#### Hypothesis 4 
+
+```{r}
+fit.brm2.bloom %>% 
+  emmeans(pairwise ~ made_of_condition | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  pivot_wider(names_from = kind,
+              values_from = .value) %>% 
+  mutate(artifacts_living = artifacts - living,
+         artifacts_non_living = artifacts - non_living,
+         living_non_living = living - non_living) %>% 
+  summarise(artifacts_living = quantile(artifacts_living, c(0.025, 0.5, 0.975)),
+            artifacts_non_living = quantile(artifacts_non_living, c(0.025, 0.5, 0.975)),
+            living_non_living = quantile(living_non_living, c(0.025, 0.5, 0.975))) %>% 
+  mutate(index = c("low", "median", "high")) 
+```
+
+
+#### Effect of Made and Appearance Across Domains
+
+```{r}
+tmp.made = fit.brm2 %>% 
+  emmeans(pairwise ~ made_of_condition | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, kind, .draw, .value)
+
+tmp.appearance = fit.brm2 %>% 
+  emmeans(pairwise ~ appearance_type  | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, kind, .draw, .value)
+
+tmp.combined = tmp.made %>% 
+  select(kind, made = .value, .draw, -contrast) %>% 
+  left_join(tmp.appearance %>% 
+              select(kind, appearance = .value, .draw, -contrast),
+            by = c(".draw", "kind")) %>% 
+  mutate(difference = made - appearance)
+
+tmp.combined %>% 
+  group_by(kind) %>% 
+  summarize(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
+  mutate(index = c("low", "median", "high")) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = index,
+              values_from = posterior)
+
+```
+
+
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
+# EXPERIMENT 3 Telos, Insides vs Appearance
+## Data
+### GPT-3
+#### Non living natural kinds
+
+```{r}
+df.exp3.gpt3.non_living_natural_kinds = read_csv(paste0(data_dir, 'experiment3/experiment3_gpt3_answer_retrieved/experiment3_gpt3_non_living_natural_kinds_answer_retrieved.csv'),
+                                              # Hiding the column types to make the output cleaner
+                                              show_col_types = F) %>%
+   select(c(-(category : items), -whose_appearance, -whose_comp, -whose_telo, -(scenario_1 : gpt3_response_scenario_1), -gpt3_response_scenario_2)) %>% 
+  pivot_longer(cols = c(gpt3_response_scenario_1_retrieved : gpt3_response_scenario_2_retrieved),
+               names_to = "sentence_order",
+               values_to = "response") %>% 
+  # Renaming the values in the "purpose_order" column
+  # "purpose_first" means the purpose sentence appears before the made of sentence
+  # "purpose_second" means the made of sentence appears before the purpose sentence
+  mutate(sentence_order = ifelse(sentence_order == "gpt3_response_scenario_1_retrieved", "purpose_first",
+                                "purpose_second")) %>% 
+  filter(response != "unsure") %>% 
+  rename(made_of_condition = comp_condition) %>%
+  mutate(response = case_when(item_original == "lightning" & response %in% c("lightning") ~
+                                "original_thing",
+                              item_original == "lightning" & response %in% c("cloud", "sun", "soil") ~
+                                "new_thing",
+                              item_original == "cloud" & response %in% c("cloud") ~
+                                "original_thing",
+                              item_original == "cloud" & response %in% c("lightning", "sun", "soil") ~
+                                "new_thing",
+                              item_original == "sun" & response %in% c("sun") ~
+                                "original_thing",
+                              item_original == "sun" & response %in% c("cloud", "lightning", "soil") ~
+                                "new_thing",
+                              item_original == "soil" & response %in% c("soil") ~
+                                "original_thing",
+                              item_original == "soil" & response %in% c("cloud", "sun", "lightning") ~
+                                "new_thing"),
+         response = ifelse(str_detect(response, "new_thing"), 1, 0)) %>%
+  mutate(appearance_type = ifelse(appearance_type == 'original', 'appearance_original', 'appearance_new')) %>%
+  mutate(kind = rep("Non-living natural kind"))
+  
+```
+
+#### Living natural kinds
+
+```{r}
+df.exp3.gpt3.living_natural_kinds = read_csv(paste0(data_dir, 'experiment3/experiment3_gpt3_answer_retrieved/experiment3_gpt3_living_natural_kinds_answer_retrieved.csv'),
+                                              # Hiding the column types to make the output cleaner
+                                              show_col_types = F) %>%
+   select(c(-(category : items), -whose_appearance, -whose_comp, -whose_telo, -(scenario_1 : gpt3_response_scenario_1), -gpt3_response_scenario_2)) %>% 
+  pivot_longer(cols = c(gpt3_response_scenario_1_retrieved : gpt3_response_scenario_2_retrieved),
+               names_to = "sentence_order",
+               values_to = "response") %>% 
+  # Renaming the values in the "purpose_order" column
+  # "purpose_first" means the purpose sentence appears before the made of sentence
+  # "purpose_second" means the made of sentence appears before the purpose sentence
+  mutate(sentence_order = ifelse(sentence_order == "gpt3_response_scenario_1_retrieved", "purpose_first",
+                                "purpose_second")) %>% 
+  filter(response != "unsure") %>% 
+  rename(made_of_condition = comp_condition) %>%
+  mutate(response = case_when(item_original == "chicken" & response %in% c("chicken") ~
+                                "original_thing",
+                              item_original == "chicken" & response %in% c("cow", "worm", "bat") ~
+                                "new_thing",
+                              item_original == "cow" & response %in% c("cow") ~
+                                "original_thing",
+                              item_original == "cow" & response %in% c("chicken", "worm", "bat") ~
+                                "new_thing",
+                              item_original == "worm" & response %in% c("worm") ~
+                                "original_thing",
+                              item_original == "worm" & response %in% c("chicken", "cow", "bat") ~
+                                "new_thing",
+                              item_original == "bat" & response %in% c("bat") ~
+                                "original_thing",
+                              item_original == "bat" & response %in% c("chicken", "cow", "worm") ~
+                                "new_thing"),
+         response = ifelse(str_detect(response, "new_thing"), 1, 0)) %>%
+  mutate(appearance_type = ifelse(appearance_type == 'original', 'appearance_original', 'appearance_new')) %>%
+  mutate(kind = rep("Living natural kind"))
+
+```
+
+
+#### Artifacts
+
+
+```{r}
+df.exp3.gpt3.artifacts = read_csv(paste0(data_dir, 'experiment3/experiment3_gpt3_answer_retrieved/experiment3_gpt3_artifacts_answer_retrieved.csv'),
+                                              # Hiding the column types to make the output cleaner
+                                              show_col_types = F) %>%
+   select(c(-(category : items), -whose_appearance, -whose_comp, -whose_telo, -(scenario_1 : gpt3_response_scenario_1), -gpt3_response_scenario_2)) %>% 
+  pivot_longer(cols = c(gpt3_response_scenario_1_retrieved : gpt3_response_scenario_2_retrieved),
+               names_to = "sentence_order",
+               values_to = "response") %>% 
+  # Renaming the values in the "purpose_order" column
+  # "purpose_first" means the purpose sentence appears before the made of sentence
+  # "purpose_second" means the made of sentence appears before the purpose sentence
+  mutate(sentence_order = ifelse(sentence_order == "gpt3_response_scenario_1_retrieved", "purpose_first",
+                                "purpose_second")) %>% 
+  filter(response != "unsure") %>% 
+  rename(made_of_condition = comp_condition) %>%
+  mutate(response = case_when(item_original == "bed" & response %in% c("bed") ~
+                                "original_thing",
+                              item_original == "bed" & response %in% c("microwave", "lotion", "keychain") ~
+                                "new_thing",
+                              item_original == "microwave" & response %in% c("microwave") ~
+                                "original_thing",
+                              item_original == "microwave" & response %in% c("bed", "lotion", "keychain") ~
+                                "new_thing",
+                              item_original == "lotion" & response %in% c("lotion") ~
+                                "original_thing",
+                              item_original == "lotion" & response %in% c("bed", "microwave", "keychain") ~
+                                "new_thing",
+                              item_original == "keychain" & response %in% c("keychain") ~
+                                "original_thing",
+                              item_original == "keychain" & response %in% c("bed", "microwave", "lotion") ~
+                                "new_thing"),
+         response = ifelse(str_detect(response, "new_thing"), 1, 0)) %>%
+  mutate(appearance_type = ifelse(appearance_type == 'original', 'appearance_original', 'appearance_new')) %>%
+  mutate(kind = rep("Artifact")) 
+
+```
+
+
+#### GPT-3 Aggregated
+```{r}
+df.exp3.gpt3.aggregated = df.exp3.gpt3.non_living_natural_kinds %>%
+  bind_rows(df.exp3.gpt3.living_natural_kinds, df.exp3.gpt3.artifacts)
+```
+
+### BLOOM
+#### Non living natural kinds
+
+```{r}
+df.exp3.bloom.non_living_natural_kinds = read_csv(paste0(data_dir, 'experiment3/experiment3_bloom_answer_retrieved/experiment3_bloom_non_living_natural_kinds_answer_retrieved.csv'),
+                                              # Hiding the column types to make the output cleaner
+                                              show_col_types = F) %>%
+  select(c(-(category : items), -whose_appearance, -whose_comp, -whose_telo, -(scenario_1 : bloom_response_scenario_1), -bloom_response_scenario_2)) %>% 
+  pivot_longer(cols = c(bloom_response_scenario_1_retrieved : bloom_response_scenario_2_retrieved),
+               names_to = "sentence_order",
+               values_to = "response") %>% 
+  mutate(sentence_order = ifelse(sentence_order == "bloom_response_scenario_1_retrieved", "purpose_first",
+                                "purpose_second")) %>% 
+  filter(response != "unsure") %>% 
+  rename(made_of_condition = comp_condition) %>%
+  mutate(response = case_when(item_original == "lightning" & response %in% c("lightning") ~
+                                "original_thing",
+                              item_original == "lightning" & response %in% c("cloud", "sun", "soil") ~
+                                "new_thing",
+                              item_original == "cloud" & response %in% c("cloud") ~
+                                "original_thing",
+                              item_original == "cloud" & response %in% c("lightning", "sun", "soil") ~
+                                "new_thing",
+                              item_original == "sun" & response %in% c("sun") ~
+                                "original_thing",
+                              item_original == "sun" & response %in% c("cloud", "lightning", "soil") ~
+                                "new_thing",
+                              item_original == "soil" & response %in% c("soil") ~
+                                "original_thing",
+                              item_original == "soil" & response %in% c("cloud", "sun", "lightning") ~
+                                "new_thing"),
+         response = ifelse(str_detect(response, "new_thing"), 1, 0)) %>%
+  mutate(appearance_type = ifelse(appearance_type == 'original', 'appearance_original', 'appearance_new')) %>%
+  mutate(kind = rep("Non-living natural kind"))
+  
+```
+
+#### Living natural kinds
+
+```{r}
+df.exp3.bloom.living_natural_kinds = read_csv(paste0(data_dir, 'experiment3/experiment3_bloom_answer_retrieved/experiment3_bloom_living_natural_kinds_answer_retrieved.csv'),
+                                              show_col_types = F) %>%
+  select(c(-(category : items), -whose_appearance, -whose_comp, -whose_telo, -(scenario_1 : bloom_response_scenario_1), -bloom_response_scenario_2)) %>% 
+  pivot_longer(cols = c(bloom_response_scenario_1_retrieved : bloom_response_scenario_2_retrieved),
+               names_to = "sentence_order",
+               values_to = "response") %>% 
+  mutate(sentence_order = ifelse(sentence_order == "bloom_response_scenario_1_retrieved", "purpose_first",
+                                "purpose_second")) %>% 
+  filter(response != "unsure") %>% 
+  rename(made_of_condition = comp_condition) %>%
+  mutate(response = case_when(item_original == "chicken" & response %in% c("chicken") ~
+                                "original_thing",
+                              item_original == "chicken" & response %in% c("cow", "worm", "bat") ~
+                                "new_thing",
+                              item_original == "cow" & response %in% c("cow") ~
+                                "original_thing",
+                              item_original == "cow" & response %in% c("chicken", "worm", "bat") ~
+                                "new_thing",
+                              item_original == "worm" & response %in% c("worm") ~
+                                "original_thing",
+                              item_original == "worm" & response %in% c("chicken", "cow", "bat") ~
+                                "new_thing",
+                              item_original == "bat" & response %in% c("bat") ~
+                                "original_thing",
+                              item_original == "bat" & response %in% c("chicken", "cow", "worm") ~
+                                "new_thing"),
+         response = ifelse(str_detect(response, "new_thing"), 1, 0)) %>%
+  mutate(appearance_type = ifelse(appearance_type == 'original', 'appearance_original', 'appearance_new')) %>%
+  mutate(kind = rep("Living natural kind"))
+
+```
+
+#### Artifacts
+
+```{r}
+df.exp3.bloom.artifacts = read_csv(paste0(data_dir, 'experiment3/experiment3_bloom_answer_retrieved/experiment3_bloom_artifacts_answer_retrieved.csv'),
+                                              show_col_types = F) %>%
+   select(c(-(category : items), -whose_appearance, -whose_comp, -whose_telo, -(scenario_1 : bloom_response_scenario_1), -bloom_response_scenario_2)) %>% 
+  pivot_longer(cols = c(bloom_response_scenario_1_retrieved : bloom_response_scenario_2_retrieved),
+               names_to = "sentence_order",
+               values_to = "response") %>% 
+  mutate(sentence_order = ifelse(sentence_order == "bloom_response_scenario_1_retrieved", "purpose_first",
+                                "purpose_second")) %>% 
+  filter(response != "unsure") %>% 
+  rename(made_of_condition = comp_condition) %>%
+  mutate(response = case_when(item_original == "bed" & response %in% c("bed") ~
+                                "original_thing",
+                              item_original == "bed" & response %in% c("microwave", "lotion", "keychain") ~
+                                "new_thing",
+                              item_original == "microwave" & response %in% c("microwave") ~
+                                "original_thing",
+                              item_original == "microwave" & response %in% c("bed", "lotion", "keychain") ~
+                                "new_thing",
+                              item_original == "lotion" & response %in% c("lotion") ~
+                                "original_thing",
+                              item_original == "lotion" & response %in% c("bed", "microwave", "keychain") ~
+                                "new_thing",
+                              item_original == "keychain" & response %in% c("keychain") ~
+                                "original_thing",
+                              item_original == "keychain" & response %in% c("bed", "microwave", "lotion") ~
+                                "new_thing"),
+         response = ifelse(str_detect(response, "new_thing"), 1, 0)) %>%
+  mutate(appearance_type = ifelse(appearance_type == 'original', 'appearance_original', 'appearance_new')) %>%
+  mutate(kind = rep("Artifact")) 
+
+```
+
+
+#### BLOOM Aggregated
+```{r}
+df.exp3.bloom.aggregated = df.exp3.bloom.non_living_natural_kinds %>%
+  bind_rows(df.exp3.bloom.living_natural_kinds, df.exp3.bloom.artifacts)
+```
+
+
+## Plots
+### Helper functions 
+#### Appearance by telos by made of 
+
+```{r}
+
+plot_mixed = function(data, title, save = T) {
+  
+  p = ggplot(data = data,
+              mapping = aes(x = `Made of`,
+                     y = response,
+                     group = Telos,
+                     color = Telos,
+                     fill = Telos,
+                     )) +  
+    geom_point(position = position_jitterdodge(dodge.width = 0.8,
+                                               jitter.width = 0.5,
+                                               jitter.height = 0.0),
+               alpha = 0.1) + 
+    stat_summary(fun.data = "mean_cl_boot",
+                 position = position_dodge(width = 0.5),
+                 shape = 21,
+                 color = "black",
+                 size = 1) + 
+    theme(plot.title = element_text(hjust = 0.5), 
+          legend.position = "bottom",
+          text = element_text(size = 16),
+          panel.spacing = unit(1, "lines"),
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          plot.margin = margin(0.5, 1, 0.5, 0.5, "cm")) +
+    geom_hline(yintercept = .5, linetype="dashed",
+               color = "black", size=0.5) +
+    scale_color_manual(values = c('#2297E6', 'red', 'pink','green')) +
+    scale_fill_manual(values = c('#2297E6', 'red')) +
+    scale_y_continuous(labels = scales::percent) +
+    labs(y = "Probability saying\n that it is a new thing") +
+    facet_grid(appearance ~ kind, switch='y')
+    # facet_wrap(~ kind)
+  
+  print(p)
+  
+  
+  if (save) {
+    ggsave(paste0(figures_dir, 'experiment3/', title, '.pdf'),
+           width = 9, height = 5.5)
+  }
+}
+
+```
+
+
+####  Appearance by telos by made of by sentence order
+
+```{r}
+
+plot_mixed_condition_sentence_order = function(data, title, save = T) {
+  
+  p = ggplot(data = data,
+           mapping = aes(x = `Made of`,
+                     y = response,
+                     group = Telos,
+                     color = Telos,
+                     fill = Telos,
+                     )) + 
+    geom_point(position = position_jitterdodge(dodge.width = 0.8,
+                                             jitter.width = 0.5,
+                                             jitter.height = 0.0),
+             alpha = 0.1) + 
+   stat_summary(fun.data = "mean_cl_boot",
+               position = position_dodge(width = 0.5),
+               shape = 21,
+               color = "black",
+               size = 1) + 
+    theme(plot.title = element_text(hjust = 0.5), 
+          legend.position = "bottom",
+          text = element_text(size = 18),
+          panel.grid.major = element_blank(), 
+          panel.grid.minor = element_blank(),
+          axis.text.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.title.y = element_text(size=14),
+          plot.margin = margin(0.5, 1, 0.5, 0.5, "cm")) +
+    geom_hline(yintercept = .5, linetype="dashed",
+    color = "black", size=0.5) +
+    # ggtitle("Experiment 1 GPT-3 Appearance by Telos by Purpose Order") +
+    theme(plot.title = element_text(hjust = 0.5)) +
+    scale_fill_manual(values = c('#2297E6', 'red')) +
+    scale_color_manual(values = c('#2297E6', 'red')) +
+    scale_y_continuous(labels = scales::percent) +
+    labs(y = "Probability saying\n that it is a new thing") +
+    facet_wrap(~sentence_order)
+  
+  print(p)
+
+  if (save) {
+    ggsave(paste0(figures_dir, 'experiment3/', title, '.pdf'),
+           width = 7, height = 4)
+  }
+}
+
+```
+
+
+
+### GPT-3 plots
+
+```{r}
+# Setting up data for plotting
+plot.exp3.gpt3.mixed = df.exp3.gpt3.aggregated %>% 
+  mutate(appearance_type = factor(appearance_type, levels = c("appearance_original", "appearance_new"))) %>%
+  mutate(made_of_condition = factor(made_of_condition, levels = c("preserved", "changed"))) %>%
+  mutate(telo_condition = factor(telo_condition, levels = c("preserved", "changed"))) %>%
+  mutate(kind = factor(kind, levels = c("Artifact", "Living natural kind", "Non-living natural kind"))) %>%
+  rename("Made of" = "made_of_condition", "appearance" = "appearance_type", "Telos" = "telo_condition") %>%
+  mutate(across('sentence_order', str_replace, 'purpose_first', 'Purpose first')) %>%
+  mutate(across('sentence_order', str_replace, 'purpose_second', 'Purpose second')) %>%
+  mutate(across('appearance', str_replace, 'appearance_original', 'Original appearance')) %>%
+  mutate(across('appearance', str_replace, 'appearance_new', 'New appearance'))  
+ 
+```
+
+```{r}
+
+plot_mixed(plot.exp3.gpt3.mixed, 
+                'experiment3_gpt3_appearance_by_telos_by_made_of',
+                save = T)
+
+```
+
+
+```{r}
+
+plot_mixed_condition_sentence_order(plot.exp3.gpt3.mixed, 
+                'experiment3_gpt3_sentence_order',
+                save = T)
+
+```
+
+
+### BLOOM plots
+
+```{r}
+# Setting up data for plotting
+plot.exp3.bloom.mixed = df.exp3.bloom.aggregated %>% 
+  mutate(appearance_type = factor(appearance_type, levels = c("appearance_original", "appearance_new"))) %>%
+  mutate(made_of_condition = factor(made_of_condition, levels = c("preserved", "changed"))) %>%
+  mutate(telo_condition = factor(telo_condition, levels = c("preserved", "changed"))) %>%
+  mutate(kind = factor(kind, levels = c("Artifact", "Living natural kind", "Non-living natural kind"))) %>%
+  rename("Made of" = "made_of_condition", "appearance" = "appearance_type", "Telos" = "telo_condition") %>%
+  mutate(across('sentence_order', str_replace, 'purpose_first', 'Purpose first')) %>%
+  mutate(across('sentence_order', str_replace, 'purpose_second', 'Purpose second')) %>%
+  mutate(across('appearance', str_replace, 'appearance_original', 'Original appearance')) %>%
+  mutate(across('appearance', str_replace, 'appearance_new', 'New appearance'))  
+```
+
+
+```{r}
+
+plot_mixed(plot.exp3.bloom.mixed, 
+                'experiment3_bloom_appearance_by_telos_by_made_of',
+                save = T)
+
+```
+
+
+```{r}
+
+plot_mixed_condition_sentence_order(plot.exp3.bloom.mixed, 
+                'experiment3_bloom_sentence_order',
+                save = T)
+
+```
+
+
+## Bayesian Linear Mixed Model
+
+### GPT3 
+
+
+#### Hypothesis 1
+
+```{r}
+
+
+```
+
+
+#### Hypothesis 2
+
+```{r}
+
+
+
+```
+
+
+#### Hypothesis 3
+
+
+```{r}
+
+
+
+```
+
+
+#### Hypothesis 4
+
+
+```{r}
+
+
+
+```
+
+
+
+### BLOOM
+
+
+
+#### Hypothesis 1
+
+```{r}
+
+
+```
+
+
+#### Hypothesis 2
+
+```{r}
+
+
+
+```
+
+
+#### Hypothesis 3
+
+
+```{r}
+
+
+
+```
+
+
+#### Hypothesis 4
+
+
+```{r}
+
+
+
+```
+
+
+
+
+# Session info
+```{r}
+sessionInfo()
+```
+
+
+
