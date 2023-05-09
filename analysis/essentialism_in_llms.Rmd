@@ -13,7 +13,7 @@ output:
 
 # Setup
 ```{r}
-library("brms")           # for Bayesian data analysis
+library("brms")       # for Bayesian data analysis
 library("knitr")      # for knitting  
 library("pwr")        # for power analysis
 library("Hmisc")      # for bootstrapped confidence intervals 
@@ -464,19 +464,24 @@ fit.brm1
 #### Hypothesis 1
 
 ```{r}
+
 fit.brm1 %>% 
   emmeans(pairwise ~ telo_condition)
+
 ```
 
 #### Hypothesis 2
 
 ```{r}
+
 fit.brm1 %>% 
   emmeans(pairwise ~ appearance_type)
+
 ```
 
 #### Hypothesis 3
 ```{r}
+
 tmp.telos = fit.brm1 %>% 
   emmeans(pairwise ~ telo_condition) %>% 
   gather_emmeans_draws() %>% 
@@ -501,10 +506,12 @@ tmp.combined = tmp.telos %>%
 tmp.combined %>% 
   summarise(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
   mutate(index = c("low", "median", "high"))
+
 ```
 
 #### Hypothesis 4 
 ```{r}
+
 fit.brm1 %>% 
   emmeans(pairwise ~ telo_condition | kind) %>% 
   gather_emmeans_draws() %>% 
@@ -519,12 +526,14 @@ fit.brm1 %>%
             artifacts_non_living = quantile(artifacts_non_living, c(0.025, 0.5, 0.975)),
             living_non_living = quantile(living_non_living, c(0.025, 0.5, 0.975))) %>% 
   mutate(index = c("low", "median", "high")) 
+
 ```
 
 
 #### Effect of Telos and Appearance across domains
 
 ```{r}
+
 tmp.telos = fit.brm1 %>% 
   emmeans(pairwise ~ telo_condition | kind) %>% 
   gather_emmeans_draws() %>% 
@@ -548,11 +557,12 @@ tmp.combined = tmp.telos %>%
 
 tmp.combined %>% 
   group_by(kind) %>% 
-  summarize(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
+  summarise(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
   mutate(index = c("low", "median", "high")) %>% 
   ungroup() %>% 
   pivot_wider(names_from = index,
               values_from = posterior)
+
 
 ```
 
@@ -580,19 +590,24 @@ fit.brm1.bloom
 #### Hypothesis 1
 
 ```{r}
+
 fit.brm1.bloom %>% 
   emmeans(pairwise ~ telo_condition)
+
 ```
 #### Hypothesis 2
 
 ```{r}
+
 fit.brm1.bloom %>% 
   emmeans(pairwise ~ appearance_type)
+
 ```
 
 #### Hypothesis 3
 
 ```{r}
+
 tmp.telos = fit.brm1.bloom %>% 
   emmeans(pairwise ~ telo_condition) %>% 
   gather_emmeans_draws() %>% 
@@ -617,11 +632,13 @@ tmp.combined = tmp.telos %>%
 tmp.combined %>% 
   summarise(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
   mutate(index = c("low", "median", "high"))
+
 ```
 
 
 #### Hypothesis 4 
 ```{r}
+
 fit.brm1.bloom %>% 
   emmeans(pairwise ~ telo_condition | kind) %>% 
   gather_emmeans_draws() %>% 
@@ -636,6 +653,7 @@ fit.brm1.bloom %>%
             artifacts_non_living = quantile(artifacts_non_living, c(0.025, 0.5, 0.975)),
             living_non_living = quantile(living_non_living, c(0.025, 0.5, 0.975))) %>% 
   mutate(index = c("low", "median", "high")) 
+
 ```
 
 
@@ -1079,8 +1097,6 @@ df.exp2.gpt3.aggregated = df.exp2.gpt3.aggregated %>%
 fit.brm2 = brm(formula = response ~ 1 + appearance_type*made_of_condition*kind + (1 | item_pair),
      data = df.exp2.gpt3.aggregated,
      seed = 1,
-     # iter = 4000,
-     # control = list(adapt_delta = 0.9999),
      cores = 4,
      file = "cache/brm2") 
 
@@ -1112,6 +1128,7 @@ fit.brm2 %>%
 #### Hypothesis 3
 
 ```{r}
+
 tmp.made = fit.brm2 %>% 
   emmeans(pairwise ~ made_of_condition) %>% 
   gather_emmeans_draws() %>% 
@@ -1136,12 +1153,14 @@ tmp.combined = tmp.made %>%
 tmp.combined %>% 
   summarise(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
   mutate(index = c("low", "median", "high"))
+
 ```
 
 
 #### Hypothesis 4 
 
 ```{r}
+
 fit.brm2 %>% 
   emmeans(pairwise ~ made_of_condition | kind) %>% 
   gather_emmeans_draws() %>% 
@@ -1156,12 +1175,14 @@ fit.brm2 %>%
             artifacts_non_living = quantile(artifacts_non_living, c(0.025, 0.5, 0.975)),
             living_non_living = quantile(living_non_living, c(0.025, 0.5, 0.975))) %>% 
   mutate(index = c("low", "median", "high")) 
+
 ```
 
 
 #### Effect of Made of and Appearance Across Domains
 
 ```{r}
+
 tmp.made = fit.brm2 %>% 
   emmeans(pairwise ~ made_of_condition | kind) %>% 
   gather_emmeans_draws() %>% 
@@ -1185,12 +1206,11 @@ tmp.combined = tmp.made %>%
 
 tmp.combined %>% 
   group_by(kind) %>% 
-  summarize(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
+  summarise(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
   mutate(index = c("low", "median", "high")) %>% 
   ungroup() %>% 
   pivot_wider(names_from = index,
               values_from = posterior)
-
 
 ```
 
@@ -1239,6 +1259,7 @@ fit.brm2.bloom %>%
 #### Hypothesis 3
 
 ```{r}
+
 tmp.made = fit.brm2.bloom %>% 
   emmeans(pairwise ~ made_of_condition) %>% 
   gather_emmeans_draws() %>% 
@@ -1263,12 +1284,14 @@ tmp.combined = tmp.made %>%
 tmp.combined %>% 
   summarise(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
   mutate(index = c("low", "median", "high"))
+
 ```
 
 
 #### Hypothesis 4 
 
 ```{r}
+
 fit.brm2.bloom %>% 
   emmeans(pairwise ~ made_of_condition | kind) %>% 
   gather_emmeans_draws() %>% 
@@ -1283,12 +1306,14 @@ fit.brm2.bloom %>%
             artifacts_non_living = quantile(artifacts_non_living, c(0.025, 0.5, 0.975)),
             living_non_living = quantile(living_non_living, c(0.025, 0.5, 0.975))) %>% 
   mutate(index = c("low", "median", "high")) 
+
 ```
 
 
 #### Effect of Made and Appearance Across Domains
 
 ```{r}
+
 tmp.made = fit.brm2 %>% 
   emmeans(pairwise ~ made_of_condition | kind) %>% 
   gather_emmeans_draws() %>% 
@@ -1312,7 +1337,7 @@ tmp.combined = tmp.made %>%
 
 tmp.combined %>% 
   group_by(kind) %>% 
-  summarize(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
+  summarise(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
   mutate(index = c("low", "median", "high")) %>% 
   ungroup() %>% 
   pivot_wider(names_from = index,
@@ -1697,7 +1722,7 @@ plot.exp3.gpt3.mixed = df.exp3.gpt3.aggregated %>%
 
 plot_mixed(plot.exp3.gpt3.mixed, 
                 'experiment3_gpt3_appearance_by_telos_by_made_of',
-                save = T)
+                save = F)
 
 ```
 
@@ -1706,7 +1731,7 @@ plot_mixed(plot.exp3.gpt3.mixed,
 
 plot_mixed_condition_sentence_order(plot.exp3.gpt3.mixed, 
                 'experiment3_gpt3_sentence_order',
-                save = T)
+                save = F)
 
 ```
 
@@ -1732,7 +1757,7 @@ plot.exp3.bloom.mixed = df.exp3.bloom.aggregated %>%
 
 plot_mixed(plot.exp3.bloom.mixed, 
                 'experiment3_bloom_appearance_by_telos_by_made_of',
-                save = T)
+                save = F)
 
 ```
 
@@ -1741,7 +1766,7 @@ plot_mixed(plot.exp3.bloom.mixed,
 
 plot_mixed_condition_sentence_order(plot.exp3.bloom.mixed, 
                 'experiment3_bloom_sentence_order',
-                save = T)
+                save = F)
 
 ```
 
@@ -1750,10 +1775,54 @@ plot_mixed_condition_sentence_order(plot.exp3.bloom.mixed,
 
 ### GPT3 
 
+```{r}
+
+df.exp3.gpt3.aggregated = df.exp3.gpt3.aggregated %>% 
+  mutate(item_pair = str_c(item_original, "_", item_new))
+
+fit.brm3 = brm(formula = response ~ 1 + appearance_type*telo_condition*made_of_condition*kind + (1 | item_pair),
+     data = df.exp3.gpt3.aggregated,
+     seed = 1,
+     cores = 4,
+     file = "cache/brm3") 
+
+fit.brm3
+
+```
+
 
 #### Hypothesis 1
 
 ```{r}
+
+tmp.made = fit.brm3 %>% 
+  emmeans(pairwise ~ made_of_condition | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, kind, .draw, .value)
+
+tmp.telos = fit.brm3 %>% 
+  emmeans(pairwise ~ telo_condition  | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, kind, .draw, .value)
+
+tmp.combined = tmp.made %>% 
+  select(kind, made = .value, .draw, -contrast) %>% 
+  left_join(tmp.telos %>% 
+              select(kind, telos = .value, .draw, -contrast),
+            by = c(".draw", "kind")) %>% 
+  mutate(difference = telos - made)
+
+tmp.combined %>% 
+  group_by(kind) %>% 
+  summarise(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
+  mutate(index = c("low", "median", "high")) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = index,
+              values_from = posterior)
 
 
 ```
@@ -1763,40 +1832,91 @@ plot_mixed_condition_sentence_order(plot.exp3.bloom.mixed,
 
 ```{r}
 
+tmp.made = fit.brm3 %>% 
+  emmeans(pairwise ~ made_of_condition | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, kind, .draw, .value)
+
+tmp.appearance = fit.brm3 %>% 
+  emmeans(pairwise ~ appearance_type  | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, kind, .draw, .value)
+
+tmp.combined = tmp.made %>% 
+  select(kind, made = .value, .draw, -contrast) %>% 
+  left_join(tmp.appearance %>% 
+              select(kind, appearance = .value, .draw, -contrast),
+            by = c(".draw", "kind")) %>% 
+  mutate(difference = made - appearance)
+
+tmp.combined %>% 
+  group_by(kind) %>% 
+  summarise(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
+  mutate(index = c("low", "median", "high")) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = index,
+              values_from = posterior)
 
 
 ```
-
-
-#### Hypothesis 3
-
-
-```{r}
-
-
-
-```
-
-
-#### Hypothesis 4
-
-
-```{r}
-
-
-
-```
-
 
 
 ### BLOOM
 
+```{r}
+
+df.exp3.bloom.aggregated = df.exp3.bloom.aggregated %>%  mutate(item_pair = str_c(item_original, "_", item_new),
+         kind = str_replace_all(kind, "Artifact", "artifacts"),
+         kind = str_replace_all(kind, "Non-living natural kind", "non_living"),
+         kind = str_replace_all(kind, "Living natural kind", "living"))
+
+fit.brm3.bloom = brm(formula = response ~ 1 + appearance_type*telo_condition*made_of_condition*kind + (1 | item_pair),
+     data = df.exp3.bloom.aggregated,
+     seed = 1,
+     cores = 4,
+     file = "cache/brm3_bloom") 
+
+fit.brm3.bloom
+
+```
 
 
 #### Hypothesis 1
 
 ```{r}
 
+tmp.made = fit.brm3.bloom %>% 
+  emmeans(pairwise ~ made_of_condition | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, kind, .draw, .value)
+
+tmp.telos = fit.brm3.bloom %>% 
+  emmeans(pairwise ~ telo_condition  | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, kind, .draw, .value)
+
+tmp.combined = tmp.made %>% 
+  select(kind, made = .value, .draw, -contrast) %>% 
+  left_join(tmp.telos %>% 
+              select(kind, telos = .value, .draw, -contrast),
+            by = c(".draw", "kind")) %>% 
+  mutate(difference = telos - made)
+
+tmp.combined %>% 
+  group_by(kind) %>% 
+  summarise(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
+  mutate(index = c("low", "median", "high")) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = index,
+              values_from = posterior)
 
 ```
 
@@ -1805,31 +1925,36 @@ plot_mixed_condition_sentence_order(plot.exp3.bloom.mixed,
 
 ```{r}
 
+tmp.made = fit.brm3.bloom %>% 
+  emmeans(pairwise ~ made_of_condition | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, kind, .draw, .value)
 
+tmp.appearance = fit.brm3.bloom %>% 
+  emmeans(pairwise ~ appearance_type  | kind) %>% 
+  gather_emmeans_draws() %>% 
+  ungroup() %>% 
+  filter(!is.na(contrast)) %>% 
+  select(contrast, kind, .draw, .value)
+
+tmp.combined = tmp.made %>% 
+  select(kind, made = .value, .draw, -contrast) %>% 
+  left_join(tmp.appearance %>% 
+              select(kind, appearance = .value, .draw, -contrast),
+            by = c(".draw", "kind")) %>% 
+  mutate(difference = made - appearance)
+
+tmp.combined %>% 
+  group_by(kind) %>% 
+  summarise(posterior = quantile(difference, c(0.025, 0.5, 0.975))) %>% 
+  mutate(index = c("low", "median", "high")) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = index,
+              values_from = posterior)
 
 ```
-
-
-#### Hypothesis 3
-
-
-```{r}
-
-
-
-```
-
-
-#### Hypothesis 4
-
-
-```{r}
-
-
-
-```
-
-
 
 
 # Session info
