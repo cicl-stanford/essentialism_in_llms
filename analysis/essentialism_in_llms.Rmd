@@ -13,8 +13,7 @@ output:
 
 # Setup
 ```{r}
-library("brms")       # for Bayesian data analysis
-library("knitr")      # for knitting  
+
 library("pwr")        # for power analysis
 library("Hmisc")      # for bootstrapped confidence intervals 
 library("patchwork")  # for making figure panels 
@@ -23,8 +22,10 @@ library("mctest")     # multi-collinearity testing
 library("janitor")    # for cleaning variables
 library("xtable")         # for saving tables
 library("emmeans")        # for comparing models
+library("knitr")      # for knitting  
 library("tidybayes")      # for tidying up results from Bayesian models
 library("broom.mixed")    # for tidying things up
+library("brms")       # for Bayesian data analysis
 library("tidyverse")      # for everything else
 
 knitr::opts_chunk$set(echo = T, warning = F, message = F)
