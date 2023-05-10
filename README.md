@@ -2,10 +2,12 @@
 
 This repository contains the experiments, data, analyses, and figures for the paper "You are what you're for: Essentialist categorization in large language models" by Siying Zhang, Jingyuan She, Tobias Gerstenberg and David Rose.
 
+The preprint can be found [here]()
+
 __Contents__:
-- [Introduction](#introduction)
+- [Introduction](#Introduction)
 - [Pre-registrations](#Pre-registrations)
-- [Repository structure](#repository-struture)
+- [Repository structure](#Repository-struture)
 
 ## Introduction
 
@@ -64,5 +66,5 @@ How do essentialist beliefs about categories arise? We hypothesize that such bel
     - `experiment1_gpt3_answer_retrieved` and `experiment1_bloom_answer_retrieved` hold the processed data that were obtained after the answer retrieval task. 
     **_NOTE:_**  For this and all subsequent experiments, two independent coders extracted item names from responses, cross-checking each other's work to ensure accuracy. Any discrepancies were marked as "unsure."
   - Likewise for `experiment2` and `experiment3`.
-- `figures/` contains all the figures from the paper (generated using the script in `analysis/`).
+- `figures/` contains all the figures from the project (generated using the script in `analysis/`).
 
