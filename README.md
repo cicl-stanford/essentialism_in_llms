@@ -21,7 +21,7 @@ How do essentialist beliefs about categories arise? We hypothesize that such bel
 
 ## Pre-registrations
 
-- the pre-registrations for all experiments may be accessed via the Open Science Framework [here](https://osf.io/gazyt/)
+- The pre-registrations for all experiments may be accessed via the Open Science Framework [here](https://osf.io/gazyt/)
 
 
 ## Repository structure
