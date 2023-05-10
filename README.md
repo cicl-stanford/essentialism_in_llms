@@ -7,7 +7,7 @@ The preprint can be found [here]()
 __Contents__:
 - [Introduction](#Introduction)
 - [Pre-registrations](#Pre-registrations)
-- [Repository structure](#Repository-struture)
+- [Repository structure](#repository-struture)
 
 ## Introduction
 
@@ -45,7 +45,7 @@ How do essentialist beliefs about categories arise? We hypothesize that such bel
 ```
 
 - `analysis/` contains all the code for analyzing data and generating figures, written in R.
-  (view a rendered file [here](https://cicl-stanford.github.io/essentialism_in_llms/)).
+  (view a rendered html file [here](https://cicl-stanford.github.io/essentialism_in_llms/)).
 - `code/` contains all the materials and code for the experiments.
   - `experiments` contains materials for each experiment that was run. 
   	- `analysis_of_prior_work` was run on GPT-3 (Model: text-curie-001) and BLOOM. `exp1_tasks_collection_essentialism.csv` was read into the python script and the language models' responses were appended to the end of the CSV file. The completed file was saved to `data/`.   Likewise for the `experiment1`, `experiment2` and `experiment3`.  ** Note that the data for `analysis_of_prior_work` were saved by studies. 
