@@ -5,8 +5,8 @@ This repository contains the experiments, data, analyses, and figures for the pa
 The preprint can be found [here]()
 
 __Contents__:
-- [Introduction](#Introduction)
-- [Pre-registrations](#Pre-registrations)
+- [Introduction](#introduction)
+- [Pre-registrations](#pre-registrations)
 - [Repository structure](#repository-struture)
 
 ## Introduction
