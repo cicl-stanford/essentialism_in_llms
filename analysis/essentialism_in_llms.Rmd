@@ -450,7 +450,11 @@ plot_purpose_order(exp1.bloom.appearance_by_telos.plot,
 ```{r}
 
 df.exp1.gpt3.aggregated = df.exp1.gpt3.aggregated %>% 
-  mutate(item_pair = str_c(item_original, "_", item_new))
+   mutate(item_pair = str_c(item_original, "_", item_new),
+         kind = str_replace_all(kind, "Artifact", "artifacts"),
+         kind = str_replace_all(kind, "Non-living natural kind", "non_living"),
+         kind = str_replace_all(kind, "Living natural kind", "living"))
+
 
 fit.brm1 = brm(formula = response ~ 1 + appearance_type*telo_condition*kind + (1 | item_pair),
      data = df.exp1.gpt3.aggregated,
@@ -519,13 +523,13 @@ fit.brm1 %>%
   ungroup() %>% 
   filter(!is.na(contrast)) %>% 
   pivot_wider(names_from = kind,
-              values_from = .value) %>% 
+              values_from = .value) %>%
   mutate(artifacts_living = artifacts - living,
-         artifacts_non_living = artifacts - non_living,
-         living_non_living = living - non_living) %>% 
+           artifacts_non_living = artifacts - non_living,
+           living_non_living = living - non_living) %>% 
   summarise(artifacts_living = quantile(artifacts_living, c(0.025, 0.5, 0.975)),
-            artifacts_non_living = quantile(artifacts_non_living, c(0.025, 0.5, 0.975)),
-            living_non_living = quantile(living_non_living, c(0.025, 0.5, 0.975))) %>% 
+              artifacts_non_living = quantile(artifacts_non_living, c(0.025, 0.5, 0.975)),
+              living_non_living = quantile(living_non_living, c(0.025, 0.5, 0.975))) %>% 
   mutate(index = c("low", "median", "high")) 
 
 ```
@@ -646,7 +650,7 @@ fit.brm1.bloom %>%
   ungroup() %>% 
   filter(!is.na(contrast)) %>% 
   pivot_wider(names_from = kind,
-              values_from = .value) %>% 
+              values_from = .value) %>%
   mutate(artifacts_living = artifacts - living,
          artifacts_non_living = artifacts - non_living,
          living_non_living = living - non_living) %>% 
@@ -1093,7 +1097,10 @@ plot_made_of_order(plot.exp2.bloom.appearance_by_made_of.plot,
 ```{r}
 
 df.exp2.gpt3.aggregated = df.exp2.gpt3.aggregated %>% 
-  mutate(item_pair = str_c(item_original, "_", item_new))
+   mutate(item_pair = str_c(item_original, "_", item_new),
+         kind = str_replace_all(kind, "Artifact", "artifacts"),
+         kind = str_replace_all(kind, "Non-living natural kind", "non_living"),
+         kind = str_replace_all(kind, "Living natural kind", "living"))
 
 fit.brm2 = brm(formula = response ~ 1 + appearance_type*made_of_condition*kind + (1 | item_pair),
      data = df.exp2.gpt3.aggregated,
@@ -1168,7 +1175,7 @@ fit.brm2 %>%
   ungroup() %>% 
   filter(!is.na(contrast)) %>% 
   pivot_wider(names_from = kind,
-              values_from = .value) %>% 
+              values_from = .value) %>%
   mutate(artifacts_living = artifacts - living,
          artifacts_non_living = artifacts - non_living,
          living_non_living = living - non_living) %>% 
@@ -1228,9 +1235,6 @@ df.exp2.bloom.aggregated = df.exp2.bloom.aggregated %>%
 fit.brm2.bloom = brm(formula = response ~ 1 + appearance_type*made_of_condition*kind + (1 | item_pair),
      data = df.exp2.bloom.aggregated,
      seed = 1,
-     # iter = 4000,
-     # control = list(adapt_delta = 0.9999),
-     cores = 4,
      file = "cache/brm2_bloom") 
 
 fit.brm2.bloom
@@ -1299,7 +1303,7 @@ fit.brm2.bloom %>%
   ungroup() %>% 
   filter(!is.na(contrast)) %>% 
   pivot_wider(names_from = kind,
-              values_from = .value) %>% 
+              values_from = .value) %>%
   mutate(artifacts_living = artifacts - living,
          artifacts_non_living = artifacts - non_living,
          living_non_living = living - non_living) %>% 
@@ -1779,7 +1783,10 @@ plot_mixed_condition_sentence_order(plot.exp3.bloom.mixed,
 ```{r}
 
 df.exp3.gpt3.aggregated = df.exp3.gpt3.aggregated %>% 
-  mutate(item_pair = str_c(item_original, "_", item_new))
+  mutate(item_pair = str_c(item_original, "_", item_new),
+         kind = str_replace_all(kind, "Artifact", "artifacts"),
+         kind = str_replace_all(kind, "Non-living natural kind", "non_living"),
+         kind = str_replace_all(kind, "Living natural kind", "living"))
 
 fit.brm3 = brm(formula = response ~ 1 + appearance_type*telo_condition*made_of_condition*kind + (1 | item_pair),
      data = df.exp3.gpt3.aggregated,
@@ -1870,7 +1877,8 @@ tmp.combined %>%
 
 ```{r}
 
-df.exp3.bloom.aggregated = df.exp3.bloom.aggregated %>%  mutate(item_pair = str_c(item_original, "_", item_new),
+df.exp3.bloom.aggregated = df.exp3.bloom.aggregated %>%  
+  mutate(item_pair = str_c(item_original, "_", item_new),
          kind = str_replace_all(kind, "Artifact", "artifacts"),
          kind = str_replace_all(kind, "Non-living natural kind", "non_living"),
          kind = str_replace_all(kind, "Living natural kind", "living"))
@@ -1956,7 +1964,6 @@ tmp.combined %>%
               values_from = posterior)
 
 ```
-
 
 # Session info
 ```{r}
