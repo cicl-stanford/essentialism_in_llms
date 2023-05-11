@@ -2,7 +2,7 @@
 
 This repository contains the experiments, data, analyses, and figures for the paper "You are what you're for: Essentialist categorization in large language models" by Siying Zhang, Jingyuan She, Tobias Gerstenberg and David Rose.
 
-The preprint can be found [here]()
+The preprint can be found [here](https://psyarxiv.com/ypw5r)
 
 __Contents__:
 - [Introduction](#introduction)
