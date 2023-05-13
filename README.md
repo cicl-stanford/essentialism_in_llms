@@ -11,7 +11,7 @@ __Contents__:
 
 ## Introduction
 
-<!-- <img src="figures/trial_agent.png" width="45%" align="left">
+<!-- <img src="figures/for_cover_pic.png" width="45%" align="left">
 <img src="figures/trial_object.png" width="45%" align="right">
 
 <br clear="left" />
