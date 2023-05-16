@@ -10,12 +10,11 @@ __Contents__:
 - [Repository structure](#repository-structure)
 
 ## Introduction
+<br clear="left" /> 
 
-<!-- <img src="figures/for_cover_pic.png" width="45%" align="left">
-<img src="figures/trial_object.png" width="45%" align="right">
-
+<img src="figures/cover.jpeg" width="75%" style="display: block; margin-left: auto; margin-right: auto;" decoding="async" >
 <br clear="left" />
-<br clear="right" /> --> 
+<br clear="right" />
 
 How do essentialist beliefs about categories arise? We hypothesize that such beliefs are transmitted via language. We subject large language models (LLMs) to vignettes from the literature on essentialist categorization and find that they align well with people when the studies manipulated teleological information -- information about what something is for. We examine whether in a classic test of essentialist categorization -- the transformation task -- LLMs prioritize teleological properties over information about what something looks like, or is made of. Experiments 1 and 2 find that telos and what something is made of matter more than appearance. Experiment 3 manipulates all three factors and finds that what something is <i>for</i> matters more than what it's <i>made of</i>. Overall, these studies suggest that language alone may be sufficient to give rise to essentialist beliefs, and that information about what something is for matters more. 
 
